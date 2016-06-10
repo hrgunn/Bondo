@@ -1,0 +1,28 @@
+h1 a {
+    color: #FCA205;
+}
+
+body {
+    padding-left: 15px;
+    background-color: blue;
+
+}
+
+
+.header{
+    background-color: red;
+    color: yellow;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.p{
+	
+}
+.container{
+    background-color: white;
+    padding: 0;
+}
+
+.errorlist > input, .errorlist > textarea{
+   border: 3px solid red; 
+}

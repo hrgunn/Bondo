@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head><!-- 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+  </head>
+  <body>
+      {% if Login %}
+    <h2> Your Username is <a href="/{{Login}}">{{Login}}</a>
+      {% endif %}
+   <div class="header">
+      <h1="heading">Login</h1>
+        {% csrf_token %}
+      <form action="{% url 'home:login' %}" method="POST">
+        <input name= "task" type="text"></input>
+        <input type= "submit" value="Submit"></input>
+      </form>
+    <div class="header">
+      {% csrf_token %}
+      <form>{{ form.as_p }}</form>
+      <h1>Welcome To the Bond Show!</h1>
+
+    </div>
+  </body>
+</html>
