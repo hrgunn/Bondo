@@ -13,14 +13,11 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+here = lambda *dirs: os.path.join(os.path.abspath(os.path.dirname(__file__)), *dirs)
+BASE_DIR = here("..", "..")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p=%tqmv!v-!vpwo_=2qqrepgoz6-m1o5n$bg3mpicb&t5d(m-a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'localflavor',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,3 +119,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIR=[os.path.join(BASE_DIR, 'static')]
+
+try:
+    from .local_settings import *
+except ImportError:
+    import sys, traceback
+    sys.stderr.write("Warning: Can't find the file 'local_settings.py' in the directory containing {}. It appears you've customized things.\nYou'll have to run django-admin.py, passing it your settings module.\n(If the file settings.py does indeed exist, it's causing an ImportError somehow.)\n".format(__file__))
+    sys.stderr.write("\nFor debugging purposes, the exception was:\n\n")
+    traceback.print_exc()

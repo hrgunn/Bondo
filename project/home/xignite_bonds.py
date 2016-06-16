@@ -1,9 +1,10 @@
+from django.conf import settings
 import requests
 
 class XigniteCorportateBonds:
 	def __init__(self):
 		self.base_url = "http://bonds.xignite.com/xBonds.json/"
-		self.access_token = {"_Token":"CB0BBEC6941D444194532D22B2ACD5F7"}
+		self.access_token = {"_Token": settings.XIGNITE_BONDS_API_KEY}
 
 	def _get(self, path, **kwargs):
 		url = self.base_url+path

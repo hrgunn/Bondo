@@ -1,27 +1,231 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
-  <head><!-- 
+  <head>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
   </head>
   <body>
-      {% if Login %}
-    <h2> Your Username is <a href="/{{Login}}">{{Login}}</a>
-      {% endif %}
-   <div class="header">
-      <h1="heading">Login</h1>
-        {% csrf_token %}
-      <form action="{% url 'home:login' %}" method="POST">
-        <input name= "task" type="text"></input>
-        <input type= "submit" value="Submit"></input>
-      </form>
+    <p>
     <div class="header">
-      {% csrf_token %}
-      <form>{{ form.as_p }}</form>
-      <h1>Welcome To the Bond Show!</h1>
+      <h1 id="heading">Bondo</h1>
+      <h5> Welcome {{request.user.username}} </h5>
+        <form action="{% url 'home:login' %}" method="POST">
+        {% csrf_token %}
 
+        <input type="submit" value="Logout" /> 
+      </form>
     </div>
-  </body>
+      <h1> Broad Range </h1>
+    <form action="{% url 'home:login' %}" method="POST">
+      {% csrf_token %}
+
+      <table id = "1"style="width:50%">
+        <tr>
+          <td></td>
+          <td>Minimum</td>
+          <td>Maximum</td>
+        </tr>
+        <tr>
+          <td>Quantity</td>
+          <td> {{form.quantity_min}} </td>
+          <td> {{form.quantity_max}} </td>
+        <tr>
+        <tr>
+          <td>Years</td>
+          <td>{{  form.years_min  }} </td>
+          <td>{{  form.years_max }} </td>
+        </tr>
+      <tr>
+          <td>Coupon </td>
+          <td> {{form.coupon_min }} </td>
+          <td> {{form.coupon_max }}</td>
+      </tr>
+      <tr>
+          <td> Price </td>
+          <td> {{ form.price_min }} </td>
+          <td> {{ form.price_max }} </td>
+      </tr>
+      <tr>
+          <td> Moody's </td>
+          <td> {{ form.Moodys_Rating_Minimum }} </td>
+          <td> {{ form.Moodys_Rating_Maximum }} <td>
+        </tr>
+        </tr>
+        <tr>
+          <td> SandP </td>
+          <td> {{ form.SandP_Rating_Minimum }} </td>
+          <td> {{ form.SandP_Rating_Maximum }} </td>
+        </tr>
+        <tr>
+          <td> Fitch </td>
+          <td> {{ form.Fitch_Ratings_Minimum }} </td>
+          <td> {{ form.Fitch_Ratings_Maximum }} </td>
+      </tr>
+    </table>
+  </form>
+
+	<h1> Quick Search </h1>
+	<hr />
+	<form method="post">
+		{% csrf_token %}
+<!-- 		{{ form.as_p }} -->
+	  
+<!--     <table id="4" style="width:100%"> -->
+
+      <table id = "1"style="width:50%">
+<!--         <tr>
+          <td></td>
+          <td>Minimum</td>
+          <td>Maximum</td>
+        </tr> -->
+
+      <tr>
+        <td>State</td>
+        <td>{{ form.state }}</td>
+    	</tr>
+      
+      <tr>
+        <td>CUSIP</td>
+        <td>{{ form.CUSIP }}<input type="submit" value="Build List" /> </td>
+
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td> {{form.description}} </td>
+      </tr>
+
+      <tr>
+        <td>Spread</td>
+        <td>{{  form.Spread }} </td>    
+      </tr>
+    </table>
+
+  </form>
+
+
+  <h1> Characteristics </h1>
+  <hr />
+  <h3> Attributes: </h3>
+    <hr />
+  <form method="post">
+    {% csrf_token %}
+     <table id = "1"style="width:30%">
+        <tr>
+                    
+        <td>Bond Type:</td>
+        <th>{{ form.Bond_Type }}</th>
+        </tr>
+
+        <tr>
+          <td>Sectors:</td>
+          <th>{{ form.Sectors }}</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Only If</th>
+            <th>Exclude</th>
+            <th>Include</th>
+        </tr>
+
+        <tr>
+            <td>Prerefund</td>
+            <td><input type='radio' name='Prerefund' value = "Only"></td>
+            <td><input type='radio' name='Prerefund' value = "Exclude"></td>
+            <td><input type='radio' name='Prerefund' value = "Include"></td>
+        </tr>
+        <tr> 
+            <td>Escrowed</td>
+            <td><input type='radio' name='Escrowed' value = "Only"></td>
+            <td><input type='radio' name='Escrowed' value = "Exclude"></td>
+            <td><input type='radio' name='Escrowed' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Insured</td>
+            <td><input type='radio' name='Insured' value = "Only"></td>
+            <td><input type='radio' name='Insured' value = "Exclude"></td>
+            <td><input type='radio' name='Insured' value = "Include"></td>
+        </tr>
+          <td> Taxable</td>
+            <td><input type='radio' name='Taxable' value = "Only"></td>
+            <td><input type='radio' name='Taxable' value = "Exclude"></td>
+            <td><input type='radio' name='Taxable' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>AMT</td>
+            <td><input type='radio' name='AMT' value = "Only"></td>
+            <td><input type='radio' name='AMT' value = "Exclude"></td>
+            <td><input type='radio' name='AMT' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Bank Q</td>
+            <td><input type='radio' name='Bank_Q' value = "Only"></td>
+            <td><input type='radio' name='Bank_Q' value = "Exclude"></td>
+            <td><input type='radio' name='Bank_Q' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Callable</td>
+            <td><input type='radio' name='Callable' value = "Only"></td>
+            <td><input type='radio' name='Callable' value = "Exclude"></td>
+            <td><input type='radio' name='Callable' value = "Include"></td>
+        </tr>
+        <tr>
+          <td> Putable</td>
+            <td><input type='radio' name='Putable' value = "Only"></td>
+            <td><input type='radio' name='Putable' value = "Exclude"></td>
+            <td><input type='radio' name='Putable' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Float/Var Rt</td>
+            <td><input type='radio' name='Float_Var_Rt' value = "Only"></td>
+            <td><input type='radio' name='Float_Var_Rt' value = "Exclude"></td>
+            <td><input type='radio' name='Float_Var_Rt' value = "Include"></td>
+        </tr>
+          <td> Sinking Fund</td>
+            <td><input type='radio' name='Sinking_Fund' value = "Only"></td>
+            <td><input type='radio' name='Sinking_Fund' value = "Exclude"></td>
+            <td><input type='radio' name='Sinking_Fund' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Convertible</td>
+            <td><input type='radio' name='Convertible' value = "Only"></td>
+            <td><input type='radio' name='Convertible' value = "Exclude"></td>
+            <td><input type='radio' name='Convertible' value = "Include"></td>
+        </tr>
+        <tr> 
+          <td>Zero Coupon</td>
+            <td><input type='radio' name='Zero_Coupon' value = "Only"></td>
+            <td><input type='radio' name='Zero_Coupon' value = "Exclude"></td>
+            <td><input type='radio' name='Zero_Coupon' value = "Include"></td>
+
+        </tr>
+    </table>
+
+</form>
+
+  <h1> Markets </h1>
+    <form method="post">
+    {% csrf_token %}
+     <table id = "1"style="width:20%">
+
+    <tr>
+      <td>Inventory From:</th>
+      <th>{{ form.Inventory_Choices }}</th>
+    </tr>
+    <tr>
+      <td>Include:</td>
+      <th>{{ form.Include_Choices }}</th>
+    <tr>
+    <td>Limit Offerings to:</td>
+    <th>{{ form.Limit_Offerings_Choices }}</th>
+       <tr>
+    <td>View:</td>
+    <th>{{ form.View }}</th>
+
+    </table>
+
+</p>
+</body>
 </html>

@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^users/create', views.UserCreate.as_view(), name='create_user'),
     url(r'^home/login', views.UserLogin.as_view(), name='login'),
     url(r'^users/logout', views.UserLogout.as_view(), name='logout'),
-    url(r'^home', views.Home.as_view())
+    url(r'^home', views.Home.as_view()),
+    url(r'^home/created', views.Created.as_view(), name = 'created')
 ]

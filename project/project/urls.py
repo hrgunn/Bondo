@@ -19,6 +19,5 @@ from home import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('home.urls', namespace='home'))
-    # url(r'^home/login', views.UserLogin.as_view()),
+    url(r'^', include('home.urls', namespace='home')),
 ]

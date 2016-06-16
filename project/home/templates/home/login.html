@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en">
-  <head>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <head><!-- 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
   </head>
   <body>
-   <p>
    <div class="header">
       <h1="heading">Login</h1>
       <form action="{% url 'home:login' %}" method="POST">
-      {% csrf_token %}
+      {% csrf_token %} 
       {{ login.as_p }}
-      </form>
-	<h1> Users </h1>
-	<hr />
-	<form method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Submit" />
-	</form>
-</p>
-</body>
+      <input type="submit" value="Submit" /> 
+
+    </form>
+    </div>
+  </body>
 </html>
