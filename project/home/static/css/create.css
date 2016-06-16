@@ -1,0 +1,40 @@
+h1 {
+    color: turquoise;
+}
+
+body {
+    padding-left: 5px;
+
+}
+
+div {
+    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 40px; /* Firefox */
+    column-gap: 40px;
+}
+
+.p1{
+    background-color: purple;
+    padding-left: 100px;
+}
+
+.header{
+    background-color: white;
+    color: black;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+li {
+    list-style: none;
+}
+
+.container{
+    background-color: white;
+    padding: 0;
+}
+
+.errorlist > input, .errorlist > textarea{
+   border: 3px solid red; 
+   list-style: none;
+}

@@ -2,6 +2,10 @@
 {% load staticfiles %}
 <html lang="en">
   <head>
+  	 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
+
   	<h1> THIS IS HOW YOU CREATE!</h1>
   </head>
 
@@ -9,6 +13,16 @@
   	<div>
   	<form action="{% url 'home:create_user' %}" method="POST">
       {% csrf_token %}
+      	<tr>
+      		<td>Username</td>
+      		{ form.Username }
+      	</tr>
+      	<tr>
+      		<td>Password</td>
+      		{ form.Password }
+      	</tr>
+
+
      {{ form.as_p }}
     <input type= "submit" value="Submit"></input>
       </form> 

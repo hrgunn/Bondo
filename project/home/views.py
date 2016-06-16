@@ -17,23 +17,20 @@ class Home(View):
 		if request.user.is_authenticated():
 
 			return render(request, self.template, {
-				'form': self.form(initial={'user':request.user}),
+				'form': self.form(),
 				
 			})
-		return render(request, self.template, {'form': HomeForm()})
+		return redirect('/home/login')
 		# return redirect('home/login')
-	# def post(self, request):
-	# 	form = self.form(request.POST)
+	def post(self, request):
+		form = self.form(request.POST)
+		print(form)
+		# if form.is_valid():
 
-
-	# 	if form.is_valid():
-	# 		if Url.objects.filter(url=request.POST['Username']).exists():
-	# 			url = Url.objects.get(Username=request.POST['Username'])
-	# 		else:
-	# 			url = form.save()
-	# 			request.session['count'] += 1
-	# 		return redirect('/add?shortCode='+ url.shortCode)
-	# 	return render(request, self.template, {'form': form, 'show': request.session['new']})
+		# 	else:
+		# 	url = form.save()
+				
+		return render(request, self.template, {'form': form})
 
 class UserLogin(View):
 	template = 'home/login.html'
@@ -64,8 +61,8 @@ class UserCreate(View):
 		form = self.form(request.POST)
 
 		if form.is_valid():
-			user = form.save()
-			print (user)
+			form = form.save()
+			print (form)
 			return redirect('/home/login')
 
 		return render(request, self.template_name, {'form': form})
@@ -79,7 +76,7 @@ class Created(View):
 		return render(request, self.template_name, {'form': form})
 
 class UserLogout(View):
-	def get(self, request):
+	def post(self, request):
 		logout( request )
 
 		return redirect('/home/login')
