@@ -29,6 +29,13 @@ li {
     list-style: none;
 }
 
+.inline li{
+    display:inline;
+}
+
+#attribute tbody tr ul li{
+    display:inline;
+}
 .container{
     background-color: white;
     padding: 0;
@@ -37,4 +44,13 @@ li {
 .errorlist > input, .errorlist > textarea{
    border: 3px solid red; 
    list-style: none;
+}
+
+label[for= "prerefund" ] {
+  display: none;
+}
+
+.borderbox{
+    border: 3px solid black;
+
 }

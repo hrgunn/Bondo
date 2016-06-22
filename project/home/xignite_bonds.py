@@ -1,7 +1,7 @@
 from django.conf import settings
 import requests
 
-class XigniteCorportateBonds:
+class XigniteCorporateBonds:
 	def __init__(self):
 		self.base_url = "http://bonds.xignite.com/xBonds.json/"
 		self.access_token = {"_Token": settings.XIGNITE_BONDS_API_KEY}
@@ -55,7 +55,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		OHLC = self._get("GetDailyOpenHighLowClosePrice")
+		OHLC = self._get("GetDailyOpenHighLowClosePrice", **kwargs)
 		return OHLC
 #Returns daily Open, High, Low, Close (OHLC) prices for the list of bonds specified in the input. Daily OHLC data is provided for the most recent date for which data is provided by the price source.
 
@@ -64,7 +64,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		OHLCs = self._get("GetDailyOpenHighLowClosePrices")
+		OHLCs = self._get("GetDailyOpenHighLowClosePrices", **kwargs)
 		return OHLCs
 
 #Returns yearly high, low prices for a specific bond reported by the price source selected in the input.
@@ -75,7 +75,7 @@ class XigniteCorportateBonds:
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
 
-		YHLP = self._get("GetYearlyHighLowPrice")
+		YHLP = self._get("GetYearlyHighLowPrice", **kwargs)
 		return YHLP
 #Returns yearly high, low prices for a specific bond reported by the price source selected in the input.
 
@@ -85,7 +85,7 @@ class XigniteCorportateBonds:
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
 
-		YHLPs = self._get("GetYearlyHighLowPrices")
+		YHLPs = self._get("GetYearlyHighLowPrices", **kwargs)
 		return YHLPs
 
 #Returns Yield to maturity for a specific bond reported by the price source selected in the input.
@@ -95,7 +95,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		find_yield = self._get("GetYield")
+		find_yield = self._get("GetYield", **kwargs)
 		return find_yield
 
 #Returns Yield to maturity for the list of bonds specified in the input as reported by the price source selected in the input.
@@ -105,7 +105,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		find_yields = self._get("GetYields")
+		find_yields = self._get("GetYields", **kwargs)
 		return find_yields
 
 # Returns Accrued Interest for a specific bond reported by the price source selected in the input.
@@ -116,7 +116,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		accrued_interest = self._get("GetAccruedInterest")
+		accrued_interest = self._get("GetAccruedInterest", **kwargs)
 		return accrued_interest
 
 # Returns Accrued Interest for the list of bonds specified in the input.
@@ -127,7 +127,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		accrued_interests = self._get("GetAccruedInterests")
+		accrued_interests = self._get("GetAccruedInterests", **kwargs)
 		return accrued_interests
 
 # Returns Price, Yield, Accrued Interest and other bond analytics data for a specific bond reported by the price source selected in the input.
@@ -138,7 +138,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		bond_calculation = self._get("GetBondCalculation")
+		bond_calculation = self._get("GetBondCalculation", **kwargs)
 		return bond_calculation
 
 
@@ -149,7 +149,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		bond_calculations = self._get("GetBondCalculations")
+		bond_calculations = self._get("GetBondCalculations", **kwargs)
 		return bond_calculations
 
 # Returns Duration and Convexity for a specific bond reported by the price source selected in the input.
@@ -159,7 +159,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		duration_and_convexity = self._get("GetDurationAndConvexity")
+		duration_and_convexity = self._get("GetDurationAndConvexity", **kwargs)
 		return duration_and_convexity
 
 # Returns Duration and Convexity for a list of bonds provided in the input.
@@ -170,7 +170,7 @@ class XigniteCorportateBonds:
 		@param
 		kwargs=>IdentifierType, Identifier, PriceSource
 		"""
-		duration_and_convexities = self._get("GetDurationAndConvexities")
+		duration_and_convexities = self._get("GetDurationAndConvexities", **kwargs)
 		return duration_and_convexities
 
 

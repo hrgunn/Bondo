@@ -36,7 +36,7 @@ Limit_Offerings_Choices=(
 	('Only New', 'Only New'),
 	('Only with a Quoted Bid Side', 'Only with a Quoted Bid Side')
 )
-View=(
+Window=(
 	('Collapsed', 'Collapsed'),
 	('Expanded', 'Expanded'),
 )
@@ -70,16 +70,19 @@ Sectors=(
 	('Cash', 'Cash')
 )
 
+Attributes=(
+	('Onlyif', 'Onlyif'),
+	('Exclude', 'Exclude'),
+	('Include', 'Include'),
+
+	)
+
+
 def years():
-	return [(year,year)for year in range(2000, 2016)]
+	return [(str(year),str(year)) for year in range(2000, 2016)]
 
 
-class Home(models.Model):
-	CUSIP = models.CharField(max_length=9)
-	description = models.TextField(max_length=200)
-	# spread = bais points?
-	# Curve?
-	state = USStateField()
+class BroadRange(models.Model):
 	quantity_min = models.IntegerField()
 	quantity_max = models.IntegerField()
 	years_min=models.CharField(max_length = 4, choices=years())
@@ -91,22 +94,45 @@ class Home(models.Model):
 	price_max=models.IntegerField()
 	# YTW min/max
 	# OID min/max
-	
 	Moodys_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	Moodys_Rating_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	SandP_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	SandP_Rating_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	Fitch_Ratings_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	Fitch_Ratings_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
-	Inventory_Choices = models.BooleanField(max_length = 3, choices=Inventory_Choices, default = "All")
-	Include_Choices = models.BooleanField(max_length = 3, choices=Include_Choices, default = "Secondary")
-	Limit_Offerings_Choices = models.BooleanField(max_length = 3, choices=Limit_Offerings_Choices, default = "All")
-	View = models.BooleanField(max_length = 2, choices=View, default = "Collapsed")
+	
+class QuickSearch(models.Model):
+	state = USStateField()
+	CUSIP = models.CharField(max_length=9)
+	description = models.CharField(max_length=200)
 	Spread = models.CharField(max_length = 100, choices=Spread, default= "bps")
-	Bond_Type = models.BooleanField(max_length = 3, choices=Bond_Type, default = "GO's")
-	Sectors = models.BooleanField(max_length = 20, choices=Sectors, default="All")
+	# Curve?
 
+class Characteristic(models.Model):
+	bond_type = models.CharField(max_length =20, choices=Bond_Type, default = "GO's")
+	sectors = models.CharField(max_length = 20, choices=Sectors, default="All")
+	prerefund = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	escrowed = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	insured = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	insurable = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	taxable = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	amt = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	bank_q = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	callable = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	putable = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	float_var_rt = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	sinking_fund = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	convertible = models.CharField(max_length = 20, choices=Attributes, default="Include")
+	zero_coupon = models.CharField(max_length = 20, choices=Attributes, default="Include")
 
+class Market(models.Model):
+	inventory_choices = models.CharField(max_length = 3, choices=Inventory_Choices, default = "All")
+	include_choices = models.CharField(max_length = 3, choices=Include_Choices, default = "Secondary")
+	limit_offerings_choices = models.CharField(max_length = 3, choices=Limit_Offerings_Choices, default = "All")
+	window = models.BooleanField(max_length = 2, choices=Window, default = "Collapsed")
 	# Call Protect
+
+# class Attributes(models.Model):
+
 
 

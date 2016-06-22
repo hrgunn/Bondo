@@ -1,24 +1,39 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from home.models import Home
-from home.forms import HomeForm
+from home.models import (
+	Market, BroadRange, 
+	Characteristic, QuickSearch
+)
+from home.forms import (
+	BroadRangeForm, QuickSearchForm, 
+	CharacteristicForm
+	, MarketForm, APIForm
+)
 from pprint import pprint as p
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import (
+	authenticate, login, logout
+)
+from django.contrib.auth.forms import (
+	UserCreationForm, AuthenticationForm
+)
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from home.xignite_bonds import XigniteCorporateBonds
 
 
 # Create your views here.
 class Home(View):
-	form = HomeForm
-	template = 'home/home.html'
+	form = BroadRangeForm
+	template_name = 'home/home.html'
 
 	def get(self, request):
 		if request.user.is_authenticated():
-
-			return render(request, self.template, {
-				'form': self.form(),
-				
+			return render(request, self.template_name, {
+				'bond_range_form': self.form(),
+				'quick_search_form': QuickSearchForm(),
+				'characteristic_form': CharacteristicForm(),
+				'market_form': MarketForm(),
+				'search_form': APIForm()
 			})
 		return redirect('/home/login')
 		# return redirect('home/login')
@@ -30,13 +45,14 @@ class Home(View):
 		# 	else:
 		# 	url = form.save()
 				
-		return render(request, self.template, {'form': form})
+		return render(request, self.template_name, {'form': form})
 
 class UserLogin(View):
-	template = 'home/login.html'
+	template_name = 'home/login.html'
 	form = AuthenticationForm
 	def get(self, request):
-		return render(request, self.template, {'login': self.form()})
+		print('UserLogin')
+		return render(request, self.template_name, {'login': self.form()})
 
 	def post(self, request):
 		
@@ -47,7 +63,7 @@ class UserLogin(View):
 			request.session['count'] = 0
 			return HttpResponseRedirect('/home/')
 		else:
-			return render(request, self.template, {'login': form, })
+			return render(request, self.template_name, {'login': form, })
 
 class UserCreate(View):
 	template_name = 'home/create.html'
@@ -80,6 +96,69 @@ class UserLogout(View):
 		logout( request )
 
 		return redirect('/home/login')
+
+class SearchForm(View):
+	form = APIForm
+
+	def get(self, request):
+		form = self.form(request.GET)
+		if form.is_valid():
+			wrapper = XigniteCorporateBonds()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data)
+			data = wrapper.get_last_sale(**form.data)
+			return JsonResponse({'data': data.text})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+class QuickSearch(View):
+	template_name = 'home/quick_search'
+	form = QuickSearchForm
+
+	def get(self, request):
+		form = QuickSearchForm(request.GET)
+		if form.is_valid():
+			wrapper = XigniteCorporateBonds()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data['CUSIP'])
+			data = wrapper.get_last_sale(Identifier = form.data['CUSIP'], IdentifierType = 'CUSIP', PriceSource = 'FINRA')
+			return JsonResponse({'data': data.text})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+
+class BroadSearch(View):
+	template_name = 'home/broad_search'
+	form = BroadRangeForm
+
+	def get(self, request):
+		form = BroadRangeForm(request.GET)
+		if form.is_valid():
+			# return render(request, self.template_name, {'form': form})
+			return JsonResponse({'data':form.data})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+class Markets(View):
+	template_name = 'home/markets'
+	form = MarketForm
+
+	def get(self, request):
+		form = MarketForm(request.GET)
+		if form.is_valid():
+			# return render(request, self.template_name, {'form': form})
+			return JsonResponse({'data':form.data})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+class Characteristic(View):
+	template_name = 'home/characteristic'
+	form = CharacteristicForm
+
+	def get(self, request):
+		form = CharacteristicForm(request.GET)
+		if form.is_valid():
+			# return render(request, self.template_name, {'form': form})
+			return JsonResponse({'data':form.data})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+
 # def home(request):
 #   return render(request, "Home/home.html", {"form": HomeForm()})
 
