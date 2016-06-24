@@ -13,5 +13,9 @@ urlpatterns = [
     url(r'^characteristic',views.Characteristic.as_view(), name = 'characteristic'),
     url(r'^users/logout', views.UserLogout.as_view(), name='logout'),
     url(r'^home', views.Home.as_view()),
-    url(r'^home/created', views.Created.as_view(), name = 'created')
+    url(r'^home/created', views.Created.as_view(), name = 'created'),
+    url(r'^bond_screen',views.ScreenBond.as_view(), name = 'bond_screen'),
+    url(r'^moody_screen',views.Moodys.as_view(), name = 'moody_screen'),
+
+
 ]

@@ -4,7 +4,8 @@ h1 a {
 
 body {
     padding-left: 5px;
-
+    width: 50em;
+    margin: 0 auto;
 }
 
 div {
@@ -51,6 +52,46 @@ label[for= "prerefund" ] {
 }
 
 .borderbox{
-    border: 3px solid black;
+    border-top: 3px solid black;
+    padding-left: 10px;
+    padding-bottom: 10px;
 
 }
+
+input, select {
+margin: 10px;
+
+}
+
+h1 {
+    letter-spacing: 2px;
+}
+
+#Bonhalla {
+    width: 15%;
+
+}
+
+.logo{
+    display: inline-block;
+    padding-right: 5px;
+    padding-bottom: 50px;
+}
+
+#trademark{
+    padding: 0;
+    margin: 0;
+}
+#trademark h1{
+    padding: 0;
+    margin:0;
+    margin-top: 15px;
+}
+/*#logoname {
+    display:inline;
+}*/
+/*#logout{
+    top: 0px;
+    right: 0px; 
+    width:20%;
+}*/

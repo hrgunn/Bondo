@@ -175,9 +175,47 @@ class XigniteCorporateBonds:
 
 
 
+class XigniteBondMaster:
+	def __init__(self):
+		self.base_url = "http://bondmaster.xignite.com/xBondMaster.json/"
+		self.access_token = {"_Token": settings.XIGNITE_BONDS_API_KEY}
+
+	def _get(self, path, **kwargs):
+		url = self.base_url+path
+		kwargs.update(self.access_token)
+		return requests.get(url,params=kwargs)
+
+	def get_screen_bonds(self, **kwargs):
+
+		"""
+		@param
+		kwargs=>Issuer, StartMaturityDate, EndMaturityDate, 
+		StartCouponRate, EndCouponRate, Callable, Convertible,
+		IncludeNonActive, MaxResultCount
+		"""
+		screen_bonds = self._get("ScreenBonds", **kwargs)
+		return screen_bonds
+
+class MoodyAPI:
+	def __init__(self):
+		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
+		self.api_key = {"_api_key": settings.MOODY_BOND_API_KEY}
+
+	def _get(self, path, **kwargs):
+		url = self.base_url+path
+		kwargs.update(self.access_token)
+		return requests.get(url,params=kwargs)
+
+	def get_moody(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		moody = self._get("GetMoody", **kwargs)
+		return moody
 
 
-
+	
 
 
 

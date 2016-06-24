@@ -90,7 +90,31 @@ class APIForm(forms.Form):
     PriceSource = forms.ChoiceField(choices=(('FINRA','FINRA'),))
      
 
+class ScreenBondForm(forms.Form):
+    Issuer = forms.CharField()
+    StartMaturityDate = forms.CharField()
+    EndMaturityDate = forms.CharField()
+    StartCouponRate = forms.CharField()
+    EndCouponRate = forms.CharField()
+    Callable = forms.ChoiceField(choices=( ('Any', 'Any'), ('True', 'True'), ('False', 'False')))
+    Convertible = forms.ChoiceField(choices=( ('Any', 'Any'), ('True', 'True'), ('False', 'False')))
+    IncludeNonactive = forms.ChoiceField(choices=( ('True', 'True'), ('False', 'False')))
+    MaxResultCount = forms.CharField()
 
+class MoodyBondForm(forms.Form):
+  id = forms.CharField()
+  dataset_code = forms.CharField()
+  database_code = forms.CharField()
+  name = forms.CharField()
+  description = forms.CharField()
+  refreshed_at = forms.CharField()
+  newest_available_date = forms.CharField()
+  oldest_available_date = forms.CharField()
+  column_names = forms.CharField()
+  frequency = forms.ChoiceField(choices= (('Daily', 'Daily'), ('Monthly', 'Monthly'), ('Annually', 'Annually')))
+  type = forms.CharField()
+  premium = forms.ChoiceField(choices= (('All', 'All'), ('True', 'True'), ('False', 'False')))
+  database_id = forms.CharField()
 
 
 

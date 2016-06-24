@@ -7,7 +7,8 @@ from home.models import (
 from home.forms import (
 	BroadRangeForm, QuickSearchForm, 
 	CharacteristicForm
-	, MarketForm, APIForm
+	, MarketForm, APIForm, ScreenBondForm,
+	MoodyBondForm
 )
 from pprint import pprint as p
 from django.contrib.auth import (
@@ -18,7 +19,7 @@ from django.contrib.auth.forms import (
 )
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from home.xignite_bonds import XigniteCorporateBonds
+from home.xignite_bonds import XigniteCorporateBonds, XigniteBondMaster
 
 
 # Create your views here.
@@ -33,7 +34,9 @@ class Home(View):
 				'quick_search_form': QuickSearchForm(),
 				'characteristic_form': CharacteristicForm(),
 				'market_form': MarketForm(),
-				'search_form': APIForm()
+				'search_form': APIForm(),
+				'screen_bond_form': ScreenBondForm(),
+				'moody_bond_form': MoodyBondForm(),
 			})
 		return redirect('/home/login')
 		# return redirect('home/login')
@@ -156,6 +159,32 @@ class Characteristic(View):
 		if form.is_valid():
 			# return render(request, self.template_name, {'form': form})
 			return JsonResponse({'data':form.data})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+class ScreenBond(View):
+	form = ScreenBondForm
+
+	def get(self, request):
+		form = self.form(request.GET)
+		if form.is_valid():
+			wrapper = XigniteBondMaster()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data)
+			data = wrapper.get_screen_bonds(**form.data)
+			return JsonResponse({'data': data.text})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+class Moodys(View):
+	form = MoodyBondForm
+	
+	def get(self, request):
+		form = self.form(request.GET)
+		if form.is_valid():
+			wrapper = MoodyAPI()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data)
+			data = wrapper.get_moody(**form.data)
+			return JsonResponse({'data': data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 

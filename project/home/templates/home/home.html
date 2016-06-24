@@ -5,324 +5,406 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-
+    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="header">
-      <h1 id="heading">Bondo</h1>
-      <h5> Welcome {{request.user.username}} </h5>
-        <form action="{% url 'home:logout' %}" method="POST">
-        {% csrf_token %}
-
-        <input type="submit" value="Logout" /> 
-      </form>
-    </div>
-    <!-- USE THIS NOW -->
-    <div class = "borderbox">
-      <h1>Search</h1>
-        <form action = "{% url 'home:search' %}" method = "GET">
-                {{ search_form }}
-        <br>
-        <input type="submit" value="Search">
-        </form>
-    </div>
-      <!-- USE THIS LATER -->
-    <div class = "borderbox">
-      <h1> Broad Range </h1>
-        <form action="{% url 'home:broad_search' %}" method="GET">
-                {% csrf_token %}
-
-        <table id = "1"style="width:50%">
-        <tr>
-          <td></td>
-          <td>Minimum</td>
-          <td>Maximum</td>
-        </tr>
-        <tr>
-          <td>Quantity</td>
-          <td> {{bond_range_form.quantity_min}} </td>
-          <td> {{bond_range_form.quantity_max}} </td>
-        <tr>
-        <tr>
-          <td>Years</td>
-          <td>{{  bond_range_form.years_min  }} </td>
-          <td>{{  bond_range_form.years_max }} </td>
-        </tr>
-      <tr>
-          <td>Coupon </td>
-          <td> {{  bond_range_form.coupon_min }} </td>
-          <td> {{  bond_range_form.coupon_max }}</td>
-      </tr>
-      <tr>
-          <td> Price </td>
-          <td> {{ bond_range_form.price_min }} </td>
-          <td> {{ bond_range_form.price_max }} </td>
-      </tr>
-      <tr>
-          <td> Moody's </td>
-          <td> {{ bond_range_form.Moodys_Rating_Minimum }} </td>
-          <td> {{ bond_range_form.Moodys_Rating_Maximum }} <td>
-        </tr>
-        </tr>
-        <tr>
-          <td> SandP </td>
-          <td> {{ bond_range_form.SandP_Rating_Minimum }} </td>
-          <td> {{ bond_range_form.SandP_Rating_Maximum }} </td>
-        </tr>
-        <tr>
-          <td> Fitch </td>
-          <td> {{ bond_range_form.Fitch_Ratings_Minimum }} </td>
-          <td> {{ bond_range_form.Fitch_Ratings_Maximum }} </td>
-      </tr>
-    </table>
-                      {% csrf_token %}
-    <input type="submit" name = "Home" value="Submit" />
-</form>
-</div>
-      <div class = "borderbox">
-	     <h1> Quick Search </h1>
-          <form action="{% url 'home:quick_search' %}" method="GET">
-	     <hr/>
-
-<!-- 		{{ form.as_p }} -->
-	  
-<!--     <table id="4" style="width:100%"> -->
-
-          <table id = "1"style="width:50%">
-<!--         <tr>
-          <td></td>
-          <td>Minimum</td>
-          <td>Maximum</td>
-        </tr> -->
-
-      <tr>
-        <td>State</td>
-        <td>{{ quick_search_form.state }}</td>
-    	</tr>
-      
-      <tr>
-        <td>CUSIP</td>
-        <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
-
-      </tr>
-      <tr>
-        <td>Description</td>
-        <td> {{quick_search_form.description}} </td>
-      </tr>
-
-      <tr>
-        <td>Spread</td>
-        <td>{{  quick_search_form.Spread }} </td>    
-      </tr>
-    </table>
-        {% csrf_token %}
-    <input type="submit" name = "Home" value="Submit" />
-</form>
-</div>
-  <div class = "borderbox">
-      <h1> Characteristics </h1>
-          <form action="{% url 'home:characteristic' %}" method="GET">
+    <div class="container">
+      <div class="row">
+          <div class="col-xs-9" id="logoname">
+            <img class = "logo" id = "Bonhalla" src="{% static 'img/Bonhalla.png' %}">
+            <div class = "logo" id = "trademark">
+            <h1 class = "logo" id="heading">Bondo</h1>
+            <br>
+            <h5 class = "logo" id="Subheader">The Portal to Bondhalla</h5>
+          </div>
+          </div>
+          <div class="col-xs-3" id = "logout">
+          <h5> Welcome: {{request.user.username}} </h5>
+            <form action="{% url 'home:logout' %}" method="POST">
+            {% csrf_token %}
+    
+            <input type="submit" value="Logout" /> 
           </form>
-      <hr />
-  </div>
-  <div class = "borderbox">
-      <h1> Attributes: </h1>
-      <hr />
-
-     <table id = "attribute" style="width:30%">
-        <tr>
-                    
+          </div>
+        </div>
+        <div id = "menu">
+          <input type = "button" value = "Quick Search" class = "cols-xs-3">
+          <input type = "button" value = "Screen Bonds" class = "cols-xs-3">
+          <input type = "button" value = "Broad Range" class = "cols-xs-3">
+          <input type = "button" value = "Characteristics" class = "cols-xs-3">
+          <input type = "button" value = "Markets" class = "cols-xs-3">
+        </div>
+        <!-- USE THIS NOW -->
+        <div class = "borderbox">
+          <h1>Search</h1>
+            <form action = "{% url 'home:search' %}" method = "GET">
+                    Identifier: {{ search_form.Identifier }}
+                    <br>
+                    Identifier Type: {{ search_form.IdentifierType }}
+                    <br>
+                    Price Source: {{ search_form.PriceSource }}
+            <br>
+            <input type="submit" value="Search">
+            </form>
+        </div>
+        <div class = "borderbox">
+          <h1>Screen Bonds</h1>
+          <form action = "{% url 'home:bond_screen' %}" method ="GET">
+                    {% csrf_token %}
+              Search By Issuer: {{ screen_bond_form.Issuer }}
+              <br>
+              Start Maturity Date: {{ screen_bond_form.StartMaturityDate }}
+              <br>
+              End Maturity Date: {{ screen_bond_form.EndMaturityDate}}
+              <br>
+              Start Coupon Rate: {{ screen_bond_form.StartCouponRate}}
+              <br>
+              End Coupon Rate: {{ screen_bond_form.EndCouponRate}}
+              <br>
+              Callable: {{ screen_bond_form.Callable}}
+              <br>
+              Convertible: {{ screen_bond_form.Convertible}}
+              <br>
+              IncludeNonactive: {{ screen_bond_form.IncludeNonactive}}
+              <br>
+              MaxResultCount: {{ screen_bond_form.MaxResultCount}}
+              <br>
+           <input type="submit" value="Submit" />
+          </form>
+        <div class = "borderbox">
+          <h1>Moody's</h1>
+          <form action = "{% url 'home:moody_screen' %}" method ="GET">
+                    {% csrf_token %}
+              Search By ID: {{ moody_bond_form.id }}
+              <br>
+              Dataset Code: {{ moody_bond_form.dataset_code }}
+              <br>
+              Database Code: {{ moody_bond_form.database_code}}
+              <br>
+              Name: {{ moody_bond_form.name}}
+              <br>
+              Description: {{ moody_bond_form.description}}
+              <br>
+              Refreshed At: {{ moody_bond_form.refreshed_at}}
+              <br>
+              Newest Available Date: {{ moody_bond_form.newest_available_date}}
+              <br>
+              Oldest Available Date: {{ moody_bond_form.oldest_available_date}}
+              <br>
+              Column names: {{ moody_bond_form.column_names}}
+              <br>
+              Frequency: {{ moody_bond_form.frequency}}
+              <br>
+              Type: {{ moody_bond_form.type}}
+              <br>
+              Premium: {{ moody_bond_form.premium}}
+              <br>
+              Database ID: {{ moody_bond_form.database_id}}
+              <br>
+           <input type="submit" value="Submit" />
+          </form>
+    
+    
+          <!-- USE THIS LATER -->
+        <div class = "borderbox">
+          <h1> Broad Range </h1>
+            <form action="{% url 'home:broad_search' %}" method="GET">
+                    {% csrf_token %}
+    
+            <table id = "1"style="width:50%">
+            <tr>
+              <td></td>
+              <td>Minimum</td>
+              <td>Maximum</td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+              <td> {{bond_range_form.quantity_min}} </td>
+              <td> {{bond_range_form.quantity_max}} </td>
+            <tr>
+            <tr>
+              <td>Years</td>
+              <td>{{  bond_range_form.years_min  }} </td>
+              <td>{{  bond_range_form.years_max }} </td>
+            </tr>
+          <tr>
+              <td>Coupon </td>
+              <td> {{  bond_range_form.coupon_min }} </td>
+              <td> {{  bond_range_form.coupon_max }}</td>
+          </tr>
+          <tr>
+              <td> Price </td>
+              <td> {{ bond_range_form.price_min }} </td>
+              <td> {{ bond_range_form.price_max }} </td>
+          </tr>
+          <tr>
+              <td> Moody's </td>
+              <td> {{ bond_range_form.Moodys_Rating_Minimum }} </td>
+              <td> {{ bond_range_form.Moodys_Rating_Maximum }} <td>
+            </tr>
+            </tr>
+            <tr>
+              <td> SandP </td>
+              <td> {{ bond_range_form.SandP_Rating_Minimum }} </td>
+              <td> {{ bond_range_form.SandP_Rating_Maximum }} </td>
+            </tr>
+            <tr>
+              <td> Fitch </td>
+              <td> {{ bond_range_form.Fitch_Ratings_Minimum }} </td>
+              <td> {{ bond_range_form.Fitch_Ratings_Maximum }} </td>
+          </tr>
+        </table>
+                          {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+          <div class = "borderbox">
+           <h1> Quick Search </h1>
+              <form action="{% url 'home:quick_search' %}" method="GET">
+           <hr/>
+    
+    <!--     {{ form.as_p }} -->
+        
+    <!--     <table id="4" style="width:100%"> -->
+    
+              <table id = "1"style="width:50%">
+    <!--         <tr>
+              <td></td>
+              <td>Minimum</td>
+              <td>Maximum</td>
+            </tr> -->
+    
+          <tr>
+            <td>State</td>
+            <td>{{ quick_search_form.state }}</td>
+          </tr>
+          
+          <tr>
+            <td>CUSIP</td>
+            <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
+    
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td> {{quick_search_form.description}} </td>
+          </tr>
+    
+          <tr>
+            <td>Spread</td>
+            <td>{{  quick_search_form.Spread }} </td>    
+          </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+      <div class = "borderbox">
+          <h1> Characteristics </h1>
+              <form action="{% url 'home:characteristic' %}" method="GET">
+              </form>
+          <hr />
           <td>Bond Type:</td>
-          <td colspan="3">{{ characteristic_form.bond_type }}</td>
-        </tr>
-
-        <tr>
-          <td>Sectors:</td>
-          <td colspan="2">{{ characteristic_form.sectors }}</td>
-        </tr>
-        <tr>
-            <th colspan="1"></th>
-            <th>Only If</th>
-            <th>Exclude</th>
-            <th>Include</th>
-        </tr>
-
-        <tr>
-            <td>Prerefund</td>
-            {% for radio in characteristic_form.prerefund %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-            
-        </tr>
-        <tr> 
-            <td>Escrowed</td>
-<!--             <th> {{ characteristic_form.escrowed }}</th>
- -->            {% for radio in characteristic_form.escrowed %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-        </tr> 
-        <tr>
-            <td>Insured</td>
-            <!-- <th> {{ characteristic_form.escrowed }}</th> -->
-            {% for radio in characteristic_form.insured %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            <td>Insurable</td>
-            <!-- <th> {{ characteristic_form.escrowed }}</th> -->
-            {% for radio in characteristic_form.insurable %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-        </tr>
-        <tr>
-            <td>Taxable</td>
-<!--             <th> {{ characteristic_form.escrowed }}</th> -->
-            {% for radio in characteristic_form.taxable %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-        </tr> 
-
-        <tr>
-            <td>AMT</td>
-<!--             <th> {{ characteristic_form.escrowed }}</th>
-    -->     {% for radio in characteristic_form.amt %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}
-        </tr> 
-
-      
-        <tr> 
-            <td>Bank Q</td>
-            <!-- <th> {{ characteristic_form.bank_q }}</th> -->
-            {% for radio in characteristic_form.bank_q %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Callable</td>
-            <!-- <th> {{ characteristic_form.callable }}</th> -->
-            {% for radio in characteristic_form.callable %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Putable</td>
-            <!-- <th> {{ characteristic_form.puttable }}</th> -->
-            {% for radio in characteristic_form.putable %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Float/Var Rt</td>
-            <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
-            {% for radio in characteristic_form.float_var_rt %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Sinking Fund</td>
-            <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
-            {% for radio in characteristic_form.sinking_fund %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Convertible</td>
-            <!-- <th> {{ characteristic_form.convertible }}</th> -->
-            {% for radio in characteristic_form.convertible %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-        <tr> 
-            <td>Zero Coupon</td>
-            <!-- <th> {{ characteristic_form.zero_coupon }}</th> -->
-            {% for radio in characteristic_form.zero_coupon %}
-            <td> 
-              <label for="{{radio.id_for_label}}">
-                {{ radio.tag }}
-              </label>
-            </td>
-            {% endfor %}  
-        </tr>
-    </table>
-        {% csrf_token %}
-    <input type="submit" name = "Home" value="Submit" />
-</form>
-</div>
-<div class = "borderbox">
-
-      <h1> Markets </h1>
+              <td colspan="3">{{ characteristic_form.bond_type }}</td>
+            </tr>
+    
+            <tr>
+              <td>Sectors:</td>
+              <td colspan="2">{{ characteristic_form.sectors }}</td>
+            </tr>
+            <tr>
+      </div>
+          <h3> Attributes: </h3>
+    
+         <table id = "attribute" style="width:30%">
+            <tr>
+                        
+              
+                <th colspan="1"></th>
+                <th>Only If</th>
+                <th>Exclude</th>
+                <th>Include</th>
+            </tr>
+    
+            <tr>
+                <td>Prerefund</td>
+                {% for radio in characteristic_form.prerefund %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+                
+            </tr>
+            <tr> 
+                <td>Escrowed</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th>
+     -->            {% for radio in characteristic_form.escrowed %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+            <tr>
+                <td>Insured</td>
+                <!-- <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.insured %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Insurable</td>
+                <!-- <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.insurable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Taxable</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.taxable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+    
+            <tr>
+                <td>AMT</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th>
+        -->     {% for radio in characteristic_form.amt %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+    
+          
+            <tr> 
+                <td>Bank Q</td>
+                <!-- <th> {{ characteristic_form.bank_q }}</th> -->
+                {% for radio in characteristic_form.bank_q %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Callable</td>
+                <!-- <th> {{ characteristic_form.callable }}</th> -->
+                {% for radio in characteristic_form.callable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Putable</td>
+                <!-- <th> {{ characteristic_form.puttable }}</th> -->
+                {% for radio in characteristic_form.putable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Float/Var Rt</td>
+                <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
+                {% for radio in characteristic_form.float_var_rt %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Sinking Fund</td>
+                <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
+                {% for radio in characteristic_form.sinking_fund %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Convertible</td>
+                <!-- <th> {{ characteristic_form.convertible }}</th> -->
+                {% for radio in characteristic_form.convertible %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Zero Coupon</td>
+                <!-- <th> {{ characteristic_form.zero_coupon }}</th> -->
+                {% for radio in characteristic_form.zero_coupon %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+    <div class = "borderbox">
+    
+          <h1> Markets </h1>
           <form action="{% url 'home:markets' %}" method="GET">
-     <table id = "1"style="width:20%">
-
-    <tr>
-      <td>Inventory From:</th>
-      <th>{{ market_form.inventory_choices }}</th>
-    </tr>
-    <tr>
-      <td>Include:</td>
-      <th>{{ market_form.include_choices }}</th>
-    <tr>
-    <td>Limit Offerings to:</td>
-    <th>{{ market_form.limit_offerings_choices }}</th>
-       <tr>
-    <td>View:</td>
-    <th>{{ market_form.window }}</th>
-
-    </table>
-        {% csrf_token %}
-    <input type="submit" name = "Home" value="Submit" />
-</form>
-</div>
+         <table id = "1">
+    
+        <tr>
+          <td>Inventory From:</td>
+          <td>{{ market_form.inventory_choices }}</td>
+        </tr>
+        <tr>
+          <td>Include:</td>
+          <td>{{ market_form.include_choices }}</td>
+        </tr>
+        <tr>
+          <td>Limit Offerings to:</td>
+          <td>{{ market_form.limit_offerings_choices }}</td>
+        </tr>
+        <tr>
+          <td>View:</td>
+          <td>{{ market_form.window }}</td>
+        </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+  </div>
 
 </body>
 </html>
