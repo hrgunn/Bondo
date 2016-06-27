@@ -1,0 +1,55 @@
+{% extends "home/home.html" %}
+{% block content %}
+        <div class = "borderbox">
+          <h1> Broad Range </h1>
+            <form action="{% url 'home:broad_range' %}" method="GET">
+                    {% csrf_token %}
+    
+            <table id = "1"style="width:50%">
+            <tr>
+              <td></td>
+              <td>Minimum</td>
+              <td>Maximum</td>
+            </tr>
+            <tr>
+              <td>Quantity</td>
+              <td> {{ bond_range_form.quantity_min}} </td>
+              <td> {{ bond_range_form.quantity_max}} </td>
+            <tr>
+            <tr>
+              <td>Years</td>
+              <td>{{  bond_range_form.years_min  }} </td>
+              <td>{{  bond_range_form.years_max }} </td>
+            </tr>
+          <tr>
+              <td>Coupon </td>
+              <td> {{  bond_range_form.coupon_min }} </td>
+              <td> {{  bond_range_form.coupon_max }}</td>
+          </tr>
+          <tr>
+              <td> Price </td>
+              <td> {{ bond_range_form.price_min }} </td>
+              <td> {{ bond_range_form.price_max }} </td>
+          </tr>
+          <tr>
+              <td> Moody's </td>
+              <td> {{ bond_range_form.Moodys_Rating_Minimum }} </td>
+              <td> {{ bond_range_form.Moodys_Rating_Maximum }} <td>
+            </tr>
+            </tr>
+            <tr>
+              <td> SandP </td>
+              <td> {{ bond_range_form.SandP_Rating_Minimum }} </td>
+              <td> {{ bond_range_form.SandP_Rating_Maximum }} </td>
+            </tr>
+            <tr>
+              <td> Fitch </td>
+              <td> {{ bond_range_form.Fitch_Ratings_Minimum }} </td>
+              <td> {{ bond_range_form.Fitch_Ratings_Maximum }} </td>
+          </tr>
+        </table>
+                          {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+{% endblock %}

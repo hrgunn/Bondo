@@ -1,0 +1,17 @@
+{% extends "home/home.html" %}
+{% block content %}
+<div class = "borderbox">
+          <h1>Search</h1>
+            <form action = "{% url 'home:search' %}" method = "POST">
+                    Identifier: {{ search_form.Identifier }}
+                    <br>
+                    Identifier Type: {{ search_form.IdentifierType }}
+                    <br>
+                    Price Source: {{ search_form.PriceSource }}
+            <br>
+            <input type="submit" value="Search">
+            </form>
+ </div>
+
+ 
+{% endblock %}

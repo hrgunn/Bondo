@@ -8,7 +8,7 @@ from home.forms import (
 	BroadRangeForm, QuickSearchForm, 
 	CharacteristicForm
 	, MarketForm, APIForm, ScreenBondForm,
-	MoodyBondForm
+	MoodyBondForm, MerrillLynchForm, ChicagoForm
 )
 from pprint import pprint as p
 from django.contrib.auth import (
@@ -19,7 +19,7 @@ from django.contrib.auth.forms import (
 )
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from home.xignite_bonds import XigniteCorporateBonds, XigniteBondMaster
+from home.wrapper import XigniteCorporateBonds, XigniteBondMaster
 
 
 # Create your views here.
@@ -37,6 +37,9 @@ class Home(View):
 				'search_form': APIForm(),
 				'screen_bond_form': ScreenBondForm(),
 				'moody_bond_form': MoodyBondForm(),
+				'merril_lynch_form': MerrillLynchForm(),
+				'chicago_form': ChicagoForm(),
+
 			})
 		return redirect('/home/login')
 		# return redirect('home/login')
@@ -101,10 +104,17 @@ class UserLogout(View):
 		return redirect('/home/login')
 
 class SearchForm(View):
-	form = APIForm
+	template_name = 'home/search.html'
+	form = APIForm()
 
 	def get(self, request):
-		form = self.form(request.GET)
+		content = {
+			'search_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+	def post(self, request):
+		form = APIForm(data=request.POST)
 		if form.is_valid():
 			wrapper = XigniteCorporateBonds()
 			# return render(request, self.template_name, {'form': form})
@@ -114,11 +124,17 @@ class SearchForm(View):
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class QuickSearch(View):
-	template_name = 'home/quick_search'
-	form = QuickSearchForm
+	template_name = 'home/quick_search.html'
+	form = QuickSearchForm()
 
 	def get(self, request):
-		form = QuickSearchForm(request.GET)
+		content = {
+			'quick_search_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+	def post(self, request):
+		form = QuickSearchForm(data=request.POST)
 		if form.is_valid():
 			wrapper = XigniteCorporateBonds()
 			# return render(request, self.template_name, {'form': form})
@@ -129,49 +145,74 @@ class QuickSearch(View):
 
 
 class BroadSearch(View):
-	template_name = 'home/broad_search'
-	form = BroadRangeForm
+	template_name = 'home/broad_range.html'
+	form = BroadRangeForm()
 
 	def get(self, request):
-		form = BroadRangeForm(request.GET)
+		content = {
+			'bond_range_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+	def post(self, request):
+		form = BroadRangeForm(data=request.POST)
 		if form.is_valid():
 			# return render(request, self.template_name, {'form': form})
-			return JsonResponse({'data':form.data})
+			return JsonResponse({'data': form.data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class Markets(View):
-	template_name = 'home/markets'
-	form = MarketForm
-
+	template_name = 'home/markets.html'
+	form = MarketForm()
 	def get(self, request):
-		form = MarketForm(request.GET)
+		content = {
+			'market_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+
+	def post(self, request):
+		form = MarketForm(data=request.POST)
 		if form.is_valid():
 			# return render(request, self.template_name, {'form': form})
-			return JsonResponse({'data':form.data})
+			return JsonResponse({'data': form.data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class Characteristic(View):
-	template_name = 'home/characteristic'
-	form = CharacteristicForm
-
+	template_name = 'home/characteristics.html'
+	form = CharacteristicForm()
 	def get(self, request):
-		form = CharacteristicForm(request.GET)
+		content = {
+			'characteristic_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+
+	def post(self, request):
+		form = CharacteristicForm(data=request.POST)
 		if form.is_valid():
 			# return render(request, self.template_name, {'form': form})
-			return JsonResponse({'data':form.data})
+			return JsonResponse({'data':form.data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class ScreenBond(View):
-	form = ScreenBondForm
-
+	template_name = 'home/screenbonds.html'
+	form = ScreenBondForm()
 	def get(self, request):
-		form = self.form(request.GET)
+		content = {
+			'screen_bond_form': self.form,
+		}
+		return render(request, self.template_name, content)
+
+
+	def post(self, request):
+		form = self.form(data=request.POST)
 		if form.is_valid():
 			wrapper = XigniteBondMaster()
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
 			data = wrapper.get_screen_bonds(**form.data)
-			return JsonResponse({'data': data.text})
+			return JsonResponse({'data': form.data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class Moodys(View):
@@ -187,6 +228,30 @@ class Moodys(View):
 			return JsonResponse({'data': data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
+class Merrill(View):
+	form = MerrillLynchForm
+
+	def get(self, request):
+		if form.is_valid():
+			wrapper = MerrillAPI()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data)
+			data = wrapper.get_merrill(**form.data)
+			return JsonResponse({'data': data.text})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+
+class Chicago(View):
+	form = ChicagoForm
+
+	def get(self, request):
+		if form.is_valid():
+			wrapper = ChicagoAPI()
+			# return render(request, self.template_name, {'form': form})
+			print (form.data)
+			data = wrapper.get_chicago(**form.data)
+			return JsonResponse({'data': data.text})
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 # def home(request):
 #   return render(request, "Home/home.html", {"form": HomeForm()})

@@ -85,13 +85,13 @@ class MarketForm(forms.ModelForm):
 
               }
 class APIForm(forms.Form):
-    Identifier = forms.CharField()
+    Identifier = forms.CharField(required = False)
     IdentifierType = forms.ChoiceField(choices=( ('Symbol','Symbol'), ('CIK','CIK'), ('CUSIP','CUSIP'), ('ISIN','ISIN'), ('Valoren','Valoren'), ('SEDOL','SEDOL') ))
     PriceSource = forms.ChoiceField(choices=(('FINRA','FINRA'),))
      
 
 class ScreenBondForm(forms.Form):
-    Issuer = forms.CharField()
+    Issuer = forms.CharField(required = False)
     StartMaturityDate = forms.CharField()
     EndMaturityDate = forms.CharField()
     StartCouponRate = forms.CharField()
@@ -102,19 +102,41 @@ class ScreenBondForm(forms.Form):
     MaxResultCount = forms.CharField()
 
 class MoodyBondForm(forms.Form):
-  id = forms.CharField()
+  id = forms.CharField(required= False)
   dataset_code = forms.CharField()
   database_code = forms.CharField()
   name = forms.CharField()
   description = forms.CharField()
-  refreshed_at = forms.CharField()
-  newest_available_date = forms.CharField()
-  oldest_available_date = forms.CharField()
-  column_names = forms.CharField()
   frequency = forms.ChoiceField(choices= (('Daily', 'Daily'), ('Monthly', 'Monthly'), ('Annually', 'Annually')))
   type = forms.CharField()
   premium = forms.ChoiceField(choices= (('All', 'All'), ('True', 'True'), ('False', 'False')))
   database_id = forms.CharField()
+
+class MerrillLynchForm (forms.Form):
+  id = forms.CharField(required= False)
+  dataset_code = forms.CharField()
+  database_code = forms.CharField()
+  name = forms.CharField()
+  description = forms.CharField()
+  frequency = forms.ChoiceField(choices= (('Daily', 'Daily'), ('Monthly', 'Monthly'), ('Annually', 'Annually')))
+  type = forms.CharField()
+  premium = forms.ChoiceField(choices= (('All', 'All'), ('True', 'True'), ('False', 'False')))
+  database_id = forms.CharField()
+
+class ChicagoForm (forms.Form):
+  id = forms.CharField(required= False)
+  dataset_code = forms.CharField()
+  database_code = forms.CharField()
+  name = forms.CharField()
+  description = forms.CharField()
+  frequency = forms.ChoiceField(choices= (('Daily', 'Daily'), ('Monthly', 'Monthly'), ('Annually', 'Annually')))
+  type = forms.CharField()
+  premium = forms.ChoiceField(choices= (('All', 'All'), ('True', 'True'), ('False', 'False')))
+  database_id = forms.CharField()
+
+
+
+
 
 
 

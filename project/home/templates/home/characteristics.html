@@ -1,0 +1,181 @@
+{% extends "home/home.html" %}
+{% block content %}
+<div class = "borderbox">
+          <h1> Characteristics </h1>
+              <form action="{% url 'home:characteristic' %}" method="GET">
+              </form>
+          <hr />
+          <td>Bond Type:</td>
+              <td colspan="3">{{ characteristic_form.bond_type }}</td>
+            </tr>
+    
+            <tr>
+              <td>Sectors:</td>
+              <td colspan="2">{{ characteristic_form.sectors }}</td>
+            </tr>
+            <tr>
+      </div>
+          <h3> Attributes: </h3>
+    
+         <table id = "attribute" style="width:30%">
+            <tr>
+                        
+              
+                <th colspan="1"></th>
+                <th>Only If</th>
+                <th>Exclude</th>
+                <th>Include</th>
+            </tr>
+    
+            <tr>
+                <td>Prerefund</td>
+                {% for radio in characteristic_form.prerefund %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+                
+            </tr>
+            <tr> 
+                <td>Escrowed</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th>
+     -->            {% for radio in characteristic_form.escrowed %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+            <tr>
+                <td>Insured</td>
+                <!-- <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.insured %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Insurable</td>
+                <!-- <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.insurable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Taxable</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th> -->
+                {% for radio in characteristic_form.taxable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+    
+            <tr>
+                <td>AMT</td>
+    <!--             <th> {{ characteristic_form.escrowed }}</th>
+        -->     {% for radio in characteristic_form.amt %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}
+            </tr> 
+    
+          
+            <tr> 
+                <td>Bank Q</td>
+                <!-- <th> {{ characteristic_form.bank_q }}</th> -->
+                {% for radio in characteristic_form.bank_q %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Callable</td>
+                <!-- <th> {{ characteristic_form.callable }}</th> -->
+                {% for radio in characteristic_form.callable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Putable</td>
+                <!-- <th> {{ characteristic_form.puttable }}</th> -->
+                {% for radio in characteristic_form.putable %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Float/Var Rt</td>
+                <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
+                {% for radio in characteristic_form.float_var_rt %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Sinking Fund</td>
+                <!-- <th> {{ characteristic_form.float_var_rt }}</th> -->
+                {% for radio in characteristic_form.sinking_fund %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Convertible</td>
+                <!-- <th> {{ characteristic_form.convertible }}</th> -->
+                {% for radio in characteristic_form.convertible %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+            <tr> 
+                <td>Zero Coupon</td>
+                <!-- <th> {{ characteristic_form.zero_coupon }}</th> -->
+                {% for radio in characteristic_form.zero_coupon %}
+                <td> 
+                  <label for="{{radio.id_for_label}}">
+                    {{ radio.tag }}
+                  </label>
+                </td>
+                {% endfor %}  
+            </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+    </div>
+{% endblock %}

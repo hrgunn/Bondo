@@ -1,0 +1,32 @@
+{% extends "home/home.html" %}
+{% block content %}
+        <div class = "borderbox">
+          <h1>Screen Bonds</h1>
+          <form action = "{% url 'home:bond_screen' %}" method ="GET">
+                    {% csrf_token %}
+              Search By Issuer: {{ screen_bond_form.Issuer }}
+              <br>
+              Start Maturity Date: {{ screen_bond_form.StartMaturityDate }}
+              <br>
+              End Maturity Date: {{ screen_bond_form.EndMaturityDate}}
+              <br>
+              Start Coupon Rate: {{ screen_bond_form.StartCouponRate}}
+              <br>
+              End Coupon Rate: {{ screen_bond_form.EndCouponRate}}
+              <br>
+              Callable: {{ screen_bond_form.Callable}}
+              <br>
+              Convertible: {{ screen_bond_form.Convertible}}
+              <br>
+              IncludeNonactive: {{ screen_bond_form.IncludeNonactive}}
+              <br>
+              MaxResultCount: {{ screen_bond_form.MaxResultCount}}
+              <br>
+           <input type="submit" value="Submit" />
+          </form>
+      </div>
+
+
+          <!-- USE THIS LATER -->
+        
+{% endblock %}

@@ -15,12 +15,12 @@ div {
 }
 
 .p1{
-    background-color: purple;
+    background-color: lightcyan;
     padding-left: 100px;
 }
 
 .header{
-    background-color: white;
+    background-color: lightcyan;
     color: black;
     padding: 15px;
     margin-bottom: 10px;
@@ -87,6 +87,24 @@ h1 {
     margin:0;
     margin-top: 15px;
 }
+
+.btn {
+    display: inline-block;
+    width: 150px;
+    background:  orange;
+    padding-bottom: 10px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+select option {
+    background-color: orange;
+}
+
+
 /*#logoname {
     display:inline;
 }*/

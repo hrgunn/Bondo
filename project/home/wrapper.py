@@ -214,8 +214,42 @@ class MoodyAPI:
 		moody = self._get("GetMoody", **kwargs)
 		return moody
 
+class Merrill_Lynch:
+	def __init__(self):
+		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
+		self.api_key = {"_api_key": settings.MERRILL_LYNCH_BOND_API_KEY}
 
-	
+	def _get(self, path, **kwargs):
+		url = self.base_url+path
+		kwargs.update(self.access_token)
+		return requests.get(url,params=kwargs)
+
+	def get_merrill(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		merrill = self._get("GetMerrill", **kwargs)
+		return merrill
+
+class ChicagoMercantileExchange:
+	def __init__(self):
+		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
+		self.api_key = {"_api_key": settings.CHICAGO_MERCANTILE_EXCHANGE_API_KEY}
+
+	def _get(self, path, **kwargs):
+		url = self.base_url+path
+		kwargs.update(self.access_token)
+		return requests.get(url,params=kwargs)
+
+	def get_chicago(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		chicago = self._get("GetChicago", **kwargs)
+		return chicago
+
 
 
 

@@ -1,0 +1,33 @@
+{% extends "home/home.html" %}
+{% block content %}
+<div class = "borderbox">
+           <h1> Quick Search </h1>
+              <form action="{% url 'home:quick_search' %}" method="GET">
+           <hr/>
+              <table id = "1"style="width:50%">
+    
+          <tr>
+            <td>State</td>
+            <td>{{ quick_search_form.state }}</td>
+          </tr>
+          
+          <tr>
+            <td>CUSIP</td>
+            <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
+    
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td> {{quick_search_form.description}} </td>
+          </tr>
+    
+          <tr>
+            <td>Spread</td>
+            <td>{{  quick_search_form.Spread }} </td>    
+          </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+ </div>
+{% endblock %}
