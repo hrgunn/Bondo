@@ -19,7 +19,7 @@ from django.contrib.auth.forms import (
 )
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from home.wrapper import XigniteCorporateBonds, XigniteBondMaster
+from home.wrapper import XigniteCorporateBonds, XigniteBondMaster, MoodyAPI, ChicagoMercantileExchange, Merrill_Lynch
 
 
 # Create your views here.
@@ -107,52 +107,93 @@ class SearchForm(View):
 	template_name = 'home/search.html'
 	form = APIForm()
 
-	def get(self, request):
-		content = {
-			'search_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'search_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 	def post(self, request):
 		form = APIForm(data=request.POST)
 		if form.is_valid():
 			wrapper = XigniteCorporateBonds()
+			wrapper2 = XigniteBondMaster()
+			wrapper3 = MoodyAPI()
+			wrapper4 = Merrill_Lynch()
+			wrapper5 = ChicagoMercantileExchange()
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
-			data = wrapper.get_last_sale(**form.data)
-			return JsonResponse({'data': data.text})
+			get_screen_bonds = wrapper2.get_screen_bonds(**form.data)
+			get_moody = wrapper3.get_moody(**form.data)
+			get_merrill = wrapper4.get_merrill(**form.data)
+			get_chicago = wrapper5.get_chicago(**form.data)
+			return JsonResponse({'get_last_sale': get_last_sale.text, 'get_last_sales': get_last_sales.text,
+			'get_price_composite': get_price_composite.text, 'get_price_composites': get_price_composites.text, 'get_daily_open_high_low_close_price' : get_daily_open_high_low_close_price.text,
+			'get_daily_open_high_low_close_prices': get_daily_open_high_low_close_prices.text, 'get_yearly_high_low_price': get_yearly_high_low_price.text,
+			'get_yearly_high_low_prices': get_yearly_high_low_prices.text, 'get_yield': get_yield.text, 'get_yields' : get_yields.text,
+			'get_accrued_interest': get_accrued_interest.text, 'get_accrued_interests': get_accrued_interests.text, 
+			'get_bond_calculation': get_bond_calculation.text, 'get_bond_calculations': get_bond_calculations.text,
+			'get_duration_and_convexity': get_duration_and_convexity.text, 'get_duration_and_convexities:': get_duration_and_convexities.text,
+			'get_screen_bonds': get_screen_bonds.text, 'get_moody': get_moody.text, 'get_merrill': get_merrill.text, 
+			'get_chicago': get_chicago.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class QuickSearch(View):
 	template_name = 'home/quick_search.html'
-	form = QuickSearchForm()
+	form = QuickSearchForm
 
-	def get(self, request):
-		content = {
-			'quick_search_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'quick_search_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 	def post(self, request):
 		form = QuickSearchForm(data=request.POST)
 		if form.is_valid():
+			data = {}
 			wrapper = XigniteCorporateBonds()
+			data['get_last_sale'] = wrapper.get_last_sale(**form.data)
+			data['get_last_sale'] = data['get_last_sale'].text
+			# get_last_sales = wrapper.get_last_sales(**form.data)
+			data['get_price_composite'] = wrapper.get_price_composite(**form.data)
+			data['get_price_composite'] = data['get_price_composite'].text
+			# get_price_composites = wrapper.get_price_composites(**form.data)
+			data['get_daily_open_high_low_close_price'] = wrapper.get_daily_open_high_low_close_price(**form.data)
+			data['get_daily_open_high_low_close_price'] = data['get_daily_open_high_low_close_price'].text
+			# get_daily_open_high_low_close_prices = wrapper.get_daily_open_high_low_close_prices(**form.data)
+			data['get_yearly_high_low_price'] = wrapper.get_yearly_high_low_price(**form.data)
+			data['get_yearly_high_low_price'] = data['get_yearly_high_low_price'].text
+			# get_yearly_high_low_prices = wrapper.get_yearly_high_low_prices(**form.data)
+			data['get_yield'] = wrapper.get_yield(**form.data)
+			data['get_yield'] = data['get_yield'].text
+			# get_yields = wrapper.get_yields(**form.data)
+			data['get_accrued_interest'] = wrapper.get_accrued_interest(**form.data)
+			data['get_accrued_interest'] = data['get_accrued_interest'].text
+			# get_accrued_interests = wrapper.get_accrued_interests(**form.data)
+			data['get_bond_calculation'] = wrapper.get_bond_calculation(**form.data)
+			data['get_bond_calculation'] = data['get_bond_calculation'].text
+			# get_bond_calculations = wrapper.get_bond_calculations(**form.data)
+			data['get_duration_and_convexity'] = wrapper.get_duration_and_convexity(**form.data)
+			data['get_duration_and_convexity'] = data['get_duration_and_convexity'].text
+			# get_duration_and_convexities = wrapper.get_duration_and_convexities(**form.data)
+
 			# return render(request, self.template_name, {'form': form})
-			print (form.data['CUSIP'])
-			data = wrapper.get_last_sale(Identifier = form.data['CUSIP'], IdentifierType = 'CUSIP', PriceSource = 'FINRA')
-			return JsonResponse({'data': data.text})
+			# data = wrapper.get_last_sale(Identifier = form.data['CUSIP'], IdentifierType = 'CUSIP', PriceSource = 'FINRA')
+
+			return JsonResponse({'data': data})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 
 class BroadSearch(View):
 	template_name = 'home/broad_range.html'
-	form = BroadRangeForm()
+	form = BroadRangeForm
 
-	def get(self, request):
-		content = {
-			'bond_range_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'bond_range_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 	def post(self, request):
 		form = BroadRangeForm(data=request.POST)
@@ -164,11 +205,11 @@ class BroadSearch(View):
 class Markets(View):
 	template_name = 'home/markets.html'
 	form = MarketForm()
-	def get(self, request):
-		content = {
-			'market_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'market_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 
 	def post(self, request):
@@ -181,11 +222,11 @@ class Markets(View):
 class Characteristic(View):
 	template_name = 'home/characteristics.html'
 	form = CharacteristicForm()
-	def get(self, request):
-		content = {
-			'characteristic_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'characteristic_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 
 	def post(self, request):
@@ -198,11 +239,11 @@ class Characteristic(View):
 class ScreenBond(View):
 	template_name = 'home/screenbonds.html'
 	form = ScreenBondForm()
-	def get(self, request):
-		content = {
-			'screen_bond_form': self.form,
-		}
-		return render(request, self.template_name, content)
+	# def get(self, request):
+	# 	content = {
+	# 		'screen_bond_form': self.form,
+	# 	}
+	# 	return render(request, self.template_name, content)
 
 
 	def post(self, request):
@@ -212,14 +253,21 @@ class ScreenBond(View):
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
 			data = wrapper.get_screen_bonds(**form.data)
+
 			return JsonResponse({'data': form.data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class Moodys(View):
 	form = MoodyBondForm
 	
-	def get(self, request):
-		form = self.form(request.GET)
+	# def get(self, request):
+	# 	content = {
+	# 		'MoodyBondForm': self.form(),
+	# 	}
+	# 	return render(request, self.template_name, content)
+
+	def post(self, request):
+		form = self.form(request.POST)
 		if form.is_valid():
 			wrapper = MoodyAPI()
 			# return render(request, self.template_name, {'form': form})
@@ -230,10 +278,16 @@ class Moodys(View):
 
 class Merrill(View):
 	form = MerrillLynchForm
+	# def get(self, request):
+	# 	content = {
+	# 		'MerrillLynchForm': self.form(),
+	# 	}
+	# 	return render(request, self.template_name, content)
 
-	def get(self, request):
+	def post(self, request):
+		form = self.form(request.POST)
 		if form.is_valid():
-			wrapper = MerrillAPI()
+			wrapper = Merrill_Lynch()
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
 			data = wrapper.get_merrill(**form.data)
@@ -244,9 +298,16 @@ class Merrill(View):
 class Chicago(View):
 	form = ChicagoForm
 
-	def get(self, request):
+	# def get(self, request):
+	# 	content = {
+	# 		'ChicagoForm': self.form(),
+	# 	}
+	# 	return render(request, self.template_name, content)
+
+	def post(self, request):
+		form = self.form(request.POST)
 		if form.is_valid():
-			wrapper = ChicagoAPI()
+			wrapper = ChicagoMercantileExchange()
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
 			data = wrapper.get_chicago(**form.data)

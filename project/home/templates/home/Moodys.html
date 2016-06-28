@@ -1,0 +1,30 @@
+{% extends "home/home.html" %}
+{% block content %}
+<div class = "borderbox">
+    
+          <h1> Moodys </h1>
+          <form action="{% url 'home:moodys' %}" method="GET">
+         <table id = "1">
+    
+        <tr>
+          <td>Inventory From:</td>
+          <td>{{ market_form.inventory_choices }}</td>
+        </tr>
+        <tr>
+          <td>Include:</td>
+          <td>{{ market_form.include_choices }}</td>
+        </tr>
+        <tr>
+          <td>Limit Offerings to:</td>
+          <td>{{ market_form.limit_offerings_choices }}</td>
+        </tr>
+        <tr>
+          <td>View:</td>
+          <td>{{ market_form.window }}</td>
+        </tr>
+        </table>
+            {% csrf_token %}
+        <input type="submit" name = "Home" value="Submit" />
+    </form>
+  </div>
+{% endblock %}

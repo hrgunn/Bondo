@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^bond_screen',views.ScreenBond.as_view(), name = 'bond_screen'),
     url(r'^moody_screen',views.Moodys.as_view(), name = 'moody_screen'),
     url(r'^merrill_screen',views.Merrill.as_view(), name = 'merrill_screen'),
-
+    # url(r'^chicago_screen'), views.Chicago.as_view(), name = 'chicago_screen'),
 ]

@@ -199,7 +199,7 @@ class XigniteBondMaster:
 class MoodyAPI:
 	def __init__(self):
 		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
-		self.api_key = {"_api_key": settings.MOODY_BOND_API_KEY}
+		self.access_token = {"_api_key": settings.MOODY_BOND_API_KEY}
 
 	def _get(self, path, **kwargs):
 		url = self.base_url+path
@@ -217,7 +217,7 @@ class MoodyAPI:
 class Merrill_Lynch:
 	def __init__(self):
 		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
-		self.api_key = {"_api_key": settings.MERRILL_LYNCH_BOND_API_KEY}
+		self.access_token = {"_api_key": settings.MERRILL_LYNCH_BOND_API_KEY}
 
 	def _get(self, path, **kwargs):
 		url = self.base_url+path
@@ -235,7 +235,7 @@ class Merrill_Lynch:
 class ChicagoMercantileExchange:
 	def __init__(self):
 		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
-		self.api_key = {"_api_key": settings.CHICAGO_MERCANTILE_EXCHANGE_API_KEY}
+		self.access_token = {"_api_key": settings.CHICAGO_MERCANTILE_EXCHANGE_API_KEY}
 
 	def _get(self, path, **kwargs):
 		url = self.base_url+path

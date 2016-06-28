@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src = "{% static 'js/index.js' %}"></script>
   </head>
   <body>
     <div class="container">
@@ -29,7 +30,7 @@
           </div>
         </div>
         <div id = "menu">
-          <a  href="/quick_search" class="btn btn-info" role="button">Quick Search</a>
+          <a  href="/quick_search" id = "quick_search" class="btn btn-info" role="button">Quick Search</a>
           <a  href="/broad_range" class="btn btn-info" role="button">Broad Range</a>
           <a  href="/bond_screen" class="btn btn-info" role="button">ScreenBonds</a>
           <a  href="/search" class="btn btn-info" role="button">Search</a>
@@ -37,47 +38,38 @@
           <a  href="/characteristic" class="btn btn-info" role="button">Characteristics</a>
 
         </div>
-        <!-- USE THIS NOW -->
-        {% block content %}
-
-        {% endblock %}
-
-        <!-- <div class = "borderbox">
-          <h1>Moody's</h1>
-          <form action = "{% url 'home:moody_screen' %}" method ="GET">
-                    {% csrf_token %}
-              Search By ID: {{ moody_bond_form.id }}
-              <br>
-              Dataset Code: {{ moody_bond_form.dataset_code }}
-              <br>
-              Database Code: {{ moody_bond_form.database_code}}
-              <br>
-              Name: {{ moody_bond_form.name}}
-              <br>
-              Description: {{ moody_bond_form.description}}
-              <br>
-              Refreshed At: {{ moody_bond_form.refreshed_at}}
-              <br>
-              Newest Available Date: {{ moody_bond_form.newest_available_date}}
-              <br>
-              Oldest Available Date: {{ moody_bond_form.oldest_available_date}}
-              <br>
-              Column names: {{ moody_bond_form.column_names}}
-              <br>
-              Frequency: {{ moody_bond_form.frequency}}
-              <br>
-              Type: {{ moody_bond_form.type}}
-              <br>
-              Premium: {{ moody_bond_form.premium}}
-              <br>
-              Database ID: {{ moody_bond_form.database_id}}
-              <br>
-           <input type="submit" value="Submit" />
-          </form>
-     -->
-    
-          <!-- USE THIS LATER -->
-        
-
+        <div id="form-zone" class = "borderbox">
+        </div>
+  </div>
+  <script id = "quick_search_template" type = "template">
+             <h1> Quick Search </h1>
+                <form action="{% url 'home:quick_search' %}" method="GET">
+             <hr/>
+                <table id = "1"style="width:50%">
+      
+            <tr>
+              <td>State</td>
+              <td>{{ quick_search_form.state }}</td>
+            </tr>
+            
+            <tr>
+              <td>CUSIP</td>
+              <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
+      
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td> {{quick_search_form.description}} </td>
+            </tr>
+      
+            <tr>
+              <td>Spread</td>
+              <td>{{  quick_search_form.Spread }} </td>    
+            </tr>
+          </table>
+              {% csrf_token %}
+          <input type="submit" name = "Home" value="Submit" />
+      </form>
+  </script>
 </body>
 </html>
