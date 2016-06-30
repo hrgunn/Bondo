@@ -45,17 +45,10 @@
              <h1> Quick Search </h1>
                 <form action="{% url 'home:quick_search' %}" method="POST">
              <hr/>
-            <div>
-              <div>State</div>
-              <div>{{ quick_search_form.state }}</div>
-            </div>
+
             <div>
               <div>CUSIP</div>
               <div>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </div>
-            </div>
-            <div>
-              <div>Description</div>
-              <div> {{quick_search_form.description}} </div>
             </div>
             <div>
               <div>Spread</div>
@@ -222,15 +215,33 @@
         <label for="id_EndCouponRate">End Coupon Rate: </label>
         <input class="form-control" id="id_EndCouponRate" type="number" min="0" max="100" step="0.1" name="EndCouponRate">
       </div>
-      
-      Callable: {{ screen_bond_form.Callable}}
-      <br>
-      Convertible: {{ screen_bond_form.Convertible}}
-      <br>
-      IncludeNonactive: {{ screen_bond_form.IncludeNonactive}}
-      <br>
-      MaxResultCount: {{ screen_bond_form.MaxResultCount}}
-      <br>
+      <div class="col-md-6 form-group">
+        <label for="id_Callable">Callable:</label>
+        <select name="Callable" class="form-control" id="id_Callable">
+          <option selected>Any</option>
+          <option>True</option>
+          <option>False</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="id_Convertible">Convertible:</label>
+        <select name="Convertible" class="form-control" id="id_Convertible">
+          <option selected>Any</option>
+          <option>True</option>
+          <option>False</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="id_IncludeNonactive">Include Nonactive:</label>
+        <select name="IncludeNonactive" class="form-control" id="id_IncludeNonactive">
+          <option selected>True</option>
+          <option>False</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="id_MaxResultCount">Max Result Count: </label>
+        <input class="form-control" id="id_MaxResultCount" type="number" min="1" max="20" name="MaxResultCount">
+      </div>
 
     <input type="submit" value="Submit" />
    </div>
@@ -324,10 +335,18 @@
             </tr>
             <tr>
       </div>
+      <div>
+      <div>Description</div>
+      <div> {{quick_search_form.description}} </div>
+      </div>
           <h3> Attributes: </h3>
     
          <table id = "attribute" style="width:30%">
-            <tr>
+
+            <div>
+            <div>State</div>
+            <div>{{ quick_search_form.state }}</div>
+            </div>
                         
               
                 <th colspan="1"></th>
