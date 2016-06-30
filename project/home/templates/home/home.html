@@ -45,6 +45,24 @@
              <h1> Quick Search </h1>
                 <form action="{% url 'home:quick_search' %}" method="POST">
              <hr/>
+            <div>
+              <div>State</div>
+              <div>{{ quick_search_form.state }}</div>
+            </div>
+            <div>
+              <div>CUSIP</div>
+              <div>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </div>
+            </div>
+            <div>
+              <div>Description</div>
+              <div> {{quick_search_form.description}} </div>
+            </div>
+            <div>
+              <div>Spread</div>
+              <div>{{  quick_search_form.Spread }} </div>    
+            </div>
+          </div>
+             <!--
                 <table id = "1"style="width:50%">
       
             <tr>
@@ -67,16 +85,65 @@
               <td>{{  quick_search_form.Spread }} </td>    
             </tr>
           </table>
+          -->
               {% csrf_token %}
           <input type="submit" name = "Home" value="Submit" />
       </form>
   </script>
   <script id = "broad_range_template" type = "template">
-          <h1> Broad Range </h1>
-            <form action="{% url 'home:broad_range' %}" method="POST">
-                    {% csrf_token %}
-    
-            <table id = "1"style="width:50%">
+          <form action="{% url 'home:broad_range' %}" method="POST">
+
+
+          <div class="container-fluid">
+           <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-2">Minimum</div>
+              <div class="col-md-2">Maximum</div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">Quantity</div>
+              <div class="col-md-2">{{ bond_range_form.quantity_min}}</div>
+              <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">Years</div>
+              <div class="col-md-2">{{ bond_range_form.quantity_min}} </div>
+              <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
+            </div>
+          <div class="row">
+              <div class="col-md-2">Coupon </div>
+              <div class="col-md-2">{{  bond_range_form.coupon_min }}</div>
+              <div class="col-md-2">{{  bond_range_form.coupon_max }}</div>
+          </div>
+          <div class="row">
+              <div class="col-md-2"> Price </div>
+              <div class="col-md-2">{{ bond_range_form.price_min }}</div>
+              <div class="col-md-2">{{ bond_range_form.price_max }}</div>
+          </div>
+          <div class="row">
+              <div class="col-md-2"> Moodys </div>
+              <div class="col-md-2">{{ bond_range_form.Moodys_Rating_Minimum }} </div>
+              <div class="col-md-2">{{ bond_range_form.Moodys_Rating_Maximum }}</div>
+            </div>
+          <div class="row">
+              <div class="col-md-2"> SandP </div>
+              <div class="col-md-2">{{ bond_range_form.SandP_Rating_Minimum }}</div>
+              <div class="col-md-2">{{ bond_range_form.SandP_Rating_Maximum }} </div>
+          </div>
+          <div class="row">
+              <div class="col-md-2"> Fitch </div>
+              <div class="col-md-2">{{ bond_range_form.Fitch_Ratings_Minimum }}</div>
+              <div class="col-md-2">{{ bond_range_form.Fitch_Ratings_Maximum }} </div>
+          </div>
+        </div>
+        </div>
+         <input type="submit" name = "Home" value="Submit" />
+
+      </form>
+</script>
+
+           <!--
+        <table id = "1"style="width:50%">
             <tr>
               <td></td>
               <td>Minimum</td>
@@ -119,34 +186,55 @@
               <td> {{ bond_range_form.Fitch_Ratings_Maximum }} </td>
           </tr>
         </table>
-                          {% csrf_token %}
-        <input type="submit" name = "Home" value="Submit" />
-    </form>
-  </script>
+        -->
   <script id = "screen_bond_template" type = "template">
-          <h1>Screen Bonds</h1>
-          <form action = "{% url 'home:bond_screen' %}" method ="POST">
-                    {% csrf_token %}
-              Search By Issuer: {{ screen_bond_form.Issuer }}
-              <br>
-              Start Maturity Date: {{ screen_bond_form.StartMaturityDate }}
-              <br>
-              End Maturity Date: {{ screen_bond_form.EndMaturityDate}}
-              <br>
-              Start Coupon Rate: {{ screen_bond_form.StartCouponRate}}
-              <br>
-              End Coupon Rate: {{ screen_bond_form.EndCouponRate}}
-              <br>
-              Callable: {{ screen_bond_form.Callable}}
-              <br>
-              Convertible: {{ screen_bond_form.Convertible}}
-              <br>
-              IncludeNonactive: {{ screen_bond_form.IncludeNonactive}}
-              <br>
-              MaxResultCount: {{ screen_bond_form.MaxResultCount}}
-              <br>
-           <input type="submit" value="Submit" />
-          </form>
+  <h1>Screen Bonds</h1>
+  <form class="form" action = "{% url 'home:bond_screen' %}" method ="POST">
+    <div class="col-md-4"> 
+            {% csrf_token %}
+      <div class="form-group">
+        <label for="id_StartCouponRate">
+        Search By Issuer: 
+        </label>
+        {{ screen_bond_form.Issuer }}
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label for="id_StartCouponRate">
+          Start Maturity Date: 
+        </label>
+        <input id="id_StartMaturityDate" type="date" name="StartMaturityDate">
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label for="id_StartCouponRate"> 
+          End Maturity Date: 
+        </label>
+        <input id="id_EndMaturityDate" type="date" name="EndMaturityDate">
+      </div>
+
+      <div class="col-md-6 form-group">
+      <label for="id_StartCouponRate">Start Coupon Rate: </label>
+        <input class="form-control" id="id_StartCouponRate" type="number" min="0" max="100" step="0.1" name="StartCouponRate">
+      </div>
+      
+      <div class="col-md-6 form-group">
+        <label for="id_EndCouponRate">End Coupon Rate: </label>
+        <input class="form-control" id="id_EndCouponRate" type="number" min="0" max="100" step="0.1" name="EndCouponRate">
+      </div>
+      
+      Callable: {{ screen_bond_form.Callable}}
+      <br>
+      Convertible: {{ screen_bond_form.Convertible}}
+      <br>
+      IncludeNonactive: {{ screen_bond_form.IncludeNonactive}}
+      <br>
+      MaxResultCount: {{ screen_bond_form.MaxResultCount}}
+      <br>
+
+    <input type="submit" value="Submit" />
+   </div>
+  </form>
   </script>
   <script id = "search_template" type = "template">  
             <h1>Search</h1>
@@ -169,14 +257,34 @@
                     Price Source: {{ search_form.PriceSource }}
             <br>
             <input type="submit" value="Search">
-            </form>
+        </div>
+      </form>
   </script>
   <script id = "market_search_template" type = "template">
     
           <h1> Markets </h1>
           <form action="{% url 'home:markets' %}" method="POST">
          <table id = "1">
-    
+    <div>
+          <div>Inventory From:</div>
+          <div>{{ market_form.inventory_choices }}</div>
+        </div>
+        <div>
+          <div>Include:</div>
+          <div>{{ market_form.include_choices }}</div>
+        </div>
+        <div>
+          <div>Limit Offerings to:</div>
+          <div>{{ market_form.limit_offerings_choices }}</div>
+        </div>
+        <div>
+          <div>View:</div>
+          <div>{{ market_form.window }}</div>
+    </div>
+
+
+
+    <!--
         <tr>
           <td>Inventory From:</td>
           <td>{{ market_form.inventory_choices }}</td>
@@ -194,6 +302,7 @@
           <td>{{ market_form.window }}</td>
         </tr>
         </table>
+        -->
             {% csrf_token %}
         <input type="submit" name = "Home" value="Submit" />
     </form>
@@ -203,6 +312,8 @@
               <form action="{% url 'home:characteristic' %}" method="GET">
               </form>
           <hr />
+          
+
           <td>Bond Type:</td>
               <td colspan="3">{{ characteristic_form.bond_type }}</td>
             </tr>

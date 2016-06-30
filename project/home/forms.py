@@ -92,8 +92,8 @@ class APIForm(forms.Form):
 
 class ScreenBondForm(forms.Form):
     Issuer = forms.CharField(required = False)
-    StartMaturityDate = forms.CharField()
-    EndMaturityDate = forms.CharField()
+    StartMaturityDate = forms.DateField()
+    EndMaturityDate = forms.DateField()
     StartCouponRate = forms.CharField()
     EndCouponRate = forms.CharField()
     Callable = forms.ChoiceField(choices=( ('Any', 'Any'), ('True', 'True'), ('False', 'False')))
