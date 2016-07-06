@@ -8,16 +8,16 @@ class BroadRangeForm(forms.ModelForm):
                "description" : forms.TextInput(),
                }
     fields = [
-    "quantity_min",
-    "quantity_max",
-    "years_min",
-    "years_max",
+    # "quantity_min",
+    # "quantity_max",
+    # "years_min",
+    # "years_max",
     # "Maturity Minimum",
     # "Maturity Maximum",
-    "coupon_min",
-    "coupon_max",
-    "price_min",
-    "price_max",
+    # "coupon_min",
+    # "coupon_max",
+    # "price_min",
+    # "price_max",
     # "YTW Minimum",
     # "YTW Maximum",
     # "OID Yield Minimum",
@@ -30,15 +30,12 @@ class BroadRangeForm(forms.ModelForm):
     "Fitch_Ratings_Maximum",
   ]
 
-class QuickSearchForm(forms.ModelForm):
-  class Meta:
-    model = QuickSearch
-    fields = [
-    "CUSIP", 
-    "description",
-    "state",
-    "Spread",
-  ]
+class QuickSearchForm(forms.Form):
+  
+    Identifier = forms.CharField(required = False)
+    IdentifierType = forms.ChoiceField(choices=( ('Symbol','Symbol'), ('CIK','CIK'), ('CUSIP','CUSIP'), ('ISIN','ISIN'), ('Valoren','Valoren'), ('SEDOL','SEDOL') ))
+    PriceSource = forms.ChoiceField(choices=(('FINRA','FINRA'),))
+  
 
 
 class CharacteristicForm(forms.ModelForm):
@@ -84,10 +81,10 @@ class MarketForm(forms.ModelForm):
 
 
               }
-class APIForm(forms.Form):
-    Identifier = forms.CharField(required = False)
-    IdentifierType = forms.ChoiceField(choices=( ('Symbol','Symbol'), ('CIK','CIK'), ('CUSIP','CUSIP'), ('ISIN','ISIN'), ('Valoren','Valoren'), ('SEDOL','SEDOL') ))
-    PriceSource = forms.ChoiceField(choices=(('FINRA','FINRA'),))
+# class APIForm(forms.Form):
+#     Identifier = forms.CharField(required = False)
+#     IdentifierType = forms.ChoiceField(choices=( ('Symbol','Symbol'), ('CIK','CIK'), ('CUSIP','CUSIP'), ('ISIN','ISIN'), ('Valoren','Valoren'), ('SEDOL','SEDOL') ))
+#     PriceSource = forms.ChoiceField(choices=(('FINRA','FINRA'),))
      
 
 class ScreenBondForm(forms.Form):

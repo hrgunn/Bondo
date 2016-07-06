@@ -83,15 +83,15 @@ def years():
 
 
 class BroadRange(models.Model):
-	quantity_min = models.IntegerField()
-	quantity_max = models.IntegerField()
-	years_min=models.CharField(max_length = 4, choices=years())
-	years_max=models.CharField(max_length = 4, choices=years())
-	# maturity pulldown min/max
-	coupon_min=models.IntegerField()
-	coupon_max=models.IntegerField()
-	price_min=models.IntegerField()
-	price_max=models.IntegerField()
+	# quantity_min = models.IntegerField()
+	# quantity_max = models.IntegerField()
+	# years_min=models.CharField(max_length = 4, choices=years())
+	# years_max=models.CharField(max_length = 4, choices=years())
+	# # maturity pulldown min/max
+	# coupon_min=models.IntegerField()
+	# coupon_max=models.IntegerField()
+	# price_min=models.IntegerField()
+	# price_max=models.IntegerField()
 	# YTW min/max
 	# OID min/max
 	Moodys_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")

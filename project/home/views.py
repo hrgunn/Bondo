@@ -7,7 +7,7 @@ from home.models import (
 from home.forms import (
 	BroadRangeForm, QuickSearchForm, 
 	CharacteristicForm
-	, MarketForm, APIForm, ScreenBondForm,
+	, MarketForm, ScreenBondForm,
 	MoodyBondForm, MerrillLynchForm, ChicagoForm
 )
 from pprint import pprint as p
@@ -34,7 +34,7 @@ class Home(View):
 				'quick_search_form': QuickSearchForm(),
 				'characteristic_form': CharacteristicForm(),
 				'market_form': MarketForm(),
-				'search_form': APIForm(),
+				# 'search_form': APIForm(),
 				'screen_bond_form': ScreenBondForm(),
 				'moody_bond_form': MoodyBondForm(),
 				'merril_lynch_form': MerrillLynchForm(),
@@ -103,25 +103,25 @@ class UserLogout(View):
 
 		return redirect('/home/login')
 
-class SearchForm(View):
-	template_name = 'home/search.html'
-	form = APIForm()
+# class SearchForm(View):
+# 	template_name = 'home/search.html'
+# 	form = APIForm()
 
-	# def get(self, request):
-	# 	content = {
-	# 		'search_form': self.form,
-	# 	}
-	# 	return render(request, self.template_name, content)
+# 	# def get(self, request):
+# 	# 	content = {
+# 	# 		'search_form': self.form,
+# 	# 	}
+# 	# 	return render(request, self.template_name, content)
 
-	def post(self, request):
-		form = APIForm(data=request.POST)
-		search_method= request.POST.get("search_method")
-		if form.is_valid():
-			wrapper = XigniteCorporateBonds()
-			method = getattr(wrapper, search_method)
-			print (form.data)
-			return JsonResponse({search_method: method(**form.data).json()})
-		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+# 	def post(self, request):
+# 		form = APIForm(data=request.POST)
+# 		search_method= request.POST.get("search_method")
+# 		if form.is_valid():
+# 			wrapper = XigniteCorporateBonds()
+# 			method = getattr(wrapper, search_method)
+# 			print (form.data)
+# 			return JsonResponse({search_method: method(**form.data).json()})
+# 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 class QuickSearch(View):
 	template_name = 'home/quick_search.html'
@@ -129,39 +129,48 @@ class QuickSearch(View):
 
 	def post(self, request):
 		form = QuickSearchForm(data=request.POST)
+		search_method= request.POST.get("quick_search_method")
+		search_method= search_method.replace(" ", "_").lower()
 		if form.is_valid():
-			data = {}
+			# data = {}
 			wrapper = XigniteCorporateBonds()
-			data['get_last_sale'] = wrapper.get_last_sale(**form.data)
-			data['get_last_sale'] = data['get_last_sale'].text
-			# get_last_sales = wrapper.get_last_sales(**form.data)
-			data['get_price_composite'] = wrapper.get_price_composite(**form.data)
-			data['get_price_composite'] = data['get_price_composite'].text
-			# get_price_composites = wrapper.get_price_composites(**form.data)
-			data['get_daily_open_high_low_close_price'] = wrapper.get_daily_open_high_low_close_price(**form.data)
-			data['get_daily_open_high_low_close_price'] = data['get_daily_open_high_low_close_price'].text
-			# get_daily_open_high_low_close_prices = wrapper.get_daily_open_high_low_close_prices(**form.data)
-			data['get_yearly_high_low_price'] = wrapper.get_yearly_high_low_price(**form.data)
-			data['get_yearly_high_low_price'] = data['get_yearly_high_low_price'].text
-			# get_yearly_high_low_prices = wrapper.get_yearly_high_low_prices(**form.data)
-			data['get_yield'] = wrapper.get_yield(**form.data)
-			data['get_yield'] = data['get_yield'].text
-			# get_yields = wrapper.get_yields(**form.data)
-			data['get_accrued_interest'] = wrapper.get_accrued_interest(**form.data)
-			data['get_accrued_interest'] = data['get_accrued_interest'].text
-			# get_accrued_interests = wrapper.get_accrued_interests(**form.data)
-			data['get_bond_calculation'] = wrapper.get_bond_calculation(**form.data)
-			data['get_bond_calculation'] = data['get_bond_calculation'].text
-			# get_bond_calculations = wrapper.get_bond_calculations(**form.data)
-			data['get_duration_and_convexity'] = wrapper.get_duration_and_convexity(**form.data)
-			data['get_duration_and_convexity'] = data['get_duration_and_convexity'].text
+			method = getattr(wrapper, search_method)
+			print (form.data)
+			response = method(**form.data)
+			if 200<=response.status_code<400:
+				return JsonResponse({search_method: response.json()})
+			else:
+				return JsonResponse({'error': response.text}, status = response.status_code)
+		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+
+			# data['get_last_sale'] = data['get_last_sale'].text
+			# # get_last_sales = wrapper.get_last_sales(**form.data)
+			# data['get_price_composite'] = wrapper.get_price_composite(**form.data)
+			# data['get_price_composite'] = data['get_price_composite'].text
+			# # get_price_composites = wrapper.get_price_composites(**form.data)
+			# data['get_daily_open_high_low_close_price'] = wrapper.get_daily_open_high_low_close_price(**form.data)
+			# data['get_daily_open_high_low_close_price'] = data['get_daily_open_high_low_close_price'].text
+			# # get_daily_open_high_low_close_prices = wrapper.get_daily_open_high_low_close_prices(**form.data)
+			# data['get_yearly_high_low_price'] = wrapper.get_yearly_high_low_price(**form.data)
+			# data['get_yearly_high_low_price'] = data['get_yearly_high_low_price'].text
+			# # get_yearly_high_low_prices = wrapper.get_yearly_high_low_prices(**form.data)
+			# data['get_yield'] = wrapper.get_yield(**form.data)
+			# data['get_yield'] = data['get_yield'].text
+			# # get_yields = wrapper.get_yields(**form.data)
+			# data['get_accrued_interest'] = wrapper.get_accrued_interest(**form.data)
+			# data['get_accrued_interest'] = data['get_accrued_interest'].text
+			# # get_accrued_interests = wrapper.get_accrued_interests(**form.data)
+			# data['get_bond_calculation'] = wrapper.get_bond_calculation(**form.data)
+			# data['get_bond_calculation'] = data['get_bond_calculation'].text
+			# # get_bond_calculations = wrapper.get_bond_calculations(**form.data)
+			# data['get_duration_and_convexity'] = wrapper.get_duration_and_convexity(**form.data)
+			# data['get_duration_and_convexity'] = data['get_duration_and_convexity'].text
+			# 	def post(self, request):
+
 			# get_duration_and_convexities = wrapper.get_duration_and_convexities(**form.data)
 
 			# return render(request, self.template_name, {'form': form})
 			# data = wrapper.get_last_sale(Identifier = form.data['CUSIP'], IdentifierType = 'CUSIP', PriceSource = 'FINRA')
-
-			return JsonResponse({'data': data})
-		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 
 
 class BroadSearch(View):
@@ -172,9 +181,18 @@ class BroadSearch(View):
 	def post(self, request):
 		form = BroadRangeForm(data=request.POST)
 		if form.is_valid():
-			# return render(request, self.template_name, {'form': form})
-			return JsonResponse({'data': form.data.text})
+			wrapper = MoodyAPI()
+			if request.POST.get("Moodys_Rating_Maximum") == "AAA":
+				response=wrapper.get_moody_AAA()
+			else:
+				response=wrapper.get_moody_BAA()
+
+			if 200<=response.status_code<400:
+				return JsonResponse({"get_moody": response.json()})
+			else:
+				return JsonResponse({'error': response.text}, status = response.status_code)
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+			# return render(request, self.template_name, {'form': form})
 
 class Markets(View):
 	template_name = 'home/markets.html'
@@ -201,7 +219,7 @@ class Characteristic(View):
 
 class ScreenBond(View):
 	template_name = 'home/screenbonds.html'
-	form = ScreenBondForm()
+	form = ScreenBondForm
 
 
 	def post(self, request):

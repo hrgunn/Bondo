@@ -198,20 +198,29 @@ class XigniteBondMaster:
 
 class MoodyAPI:
 	def __init__(self):
-		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
+		self.base_url = "https://www.quandl.com/api/v3/datasets/MOODY/{dataset_code}/data.json"
 		self.access_token = {"_api_key": settings.MOODY_BOND_API_KEY}
 
 	def _get(self, path, **kwargs):
-		url = self.base_url+path
+		url = self.base_url.format(dataset_code = path)
 		kwargs.update(self.access_token)
 		return requests.get(url,params=kwargs)
 
-	def get_moody(self,**kwargs):
+	def get_moody_BAA(self,**kwargs):
 		"""
 		@param
 		kwargs=>DatabaseCode, PerPage, SortBy, Page
 		"""
-		moody = self._get("GetMoody", **kwargs)
+		moody = self._get("DBAAYLD", **kwargs)
+		return moody
+
+
+	def get_moody_AAA(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		moody = self._get("DAAAYLD", **kwargs)
 		return moody
 
 class Merrill_Lynch:

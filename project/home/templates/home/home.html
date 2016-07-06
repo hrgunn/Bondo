@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
     <script type="text/javascript" src = "{% static 'js/index.js' %}"></script>
   </head>
   <body>
@@ -32,8 +33,8 @@
         <div id = "menu">
           <a  href="/quick_search" id = "quick_search" class="btn btn-info" role="button">Quick Search</a>
           <a  href="/broad_range" id = "broad_range_search" class="btn btn-info" role="button">Broad Range</a>
-          <a  href="/bond_screen" id = "screen_bond_search" class="btn btn-info" role="button">ScreenBonds</a>
-          <a  href="/search" id = "search" class="btn btn-info" role="button">Search</a>
+          <a  href="/bond_screen" id = "screen_bond_search" class="btn btn-info" role="button">Screen Bonds</a>
+         <!--  <a  href="/search" id = "search" class="btn btn-info" role="button">Search</a> -->
           <a  href="/markets" id = "market_search" class="btn btn-info" role="button">Markets</a>
           <a  href="/characteristic" id = "characteristic_search" class="btn btn-info" role="button">Characteristics</a>
 
@@ -41,50 +42,57 @@
         <div id="form-zone" class = "borderbox">
         </div>
   </div>
-  <script id = "quick_search_template" type = "template">
-             <h1> Quick Search </h1>
-                <form action="{% url 'home:quick_search' %}" method="POST">
-             <hr/>
-
-            <div>
-              <div>CUSIP</div>
-              <div>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </div>
-            </div>
-            <div>
-              <div>Spread</div>
-              <div>{{  quick_search_form.Spread }} </div>    
-            </div>
-          </div>
-             <!--
-                <table id = "1"style="width:50%">
+  <!--<script id = "quick_search_template" type = "template">
+  //            <h1> Quick Search </h1>
+  //               <form action="{% url 'home:quick_search' %}" method="POST">
+  //            <hr/>
+  //           <div>
+  //             <div>State</div>
+  //             <div>{{ quick_search_form.state }}</div>
+  //           </div>
+  //           <div>
+  //             <div>CUSIP</div>
+  //             <div>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </div>
+  //           </div>
+  //           <div>
+  //             <div>Description</div>
+  //             <div> {{quick_search_form.description}} </div>
+  //           </div>
+  //           <div>
+  //             <div>Spread</div>
+  //             <div>{{  quick_search_form.Spread }} </div>    
+  //           </div>
+  //         </div>
+  //            <!
+  //               <table id = "1"style="width:50%">
       
-            <tr>
-              <td>State</td>
-              <td>{{ quick_search_form.state }}</td>
-            </tr>
+  //           <tr>
+  //             <td>State</td>
+  //             <td>{{ quick_search_form.state }}</td>
+  //           </tr>
             
-            <tr>
-              <td>CUSIP</td>
-              <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
+  //           <tr>
+  //             <td>CUSIP</td>
+  //             <td>{{ quick_search_form.CUSIP }}<input type="submit" value="Build List" /> </td>
       
-            </tr>
-            <tr>
-              <td>Description</td>
-              <td> {{quick_search_form.description}} </td>
-            </tr>
+  //           </tr>
+  //           <tr>
+  //             <td>Description</td>
+  //             <td> {{quick_search_form.description}} </td>
+  //           </tr>
       
-            <tr>
-              <td>Spread</td>
-              <td>{{  quick_search_form.Spread }} </td>    
-            </tr>
-          </table>
-          -->
-              {% csrf_token %}
-          <input type="submit" name = "Home" value="Submit" />
-      </form>
-  </script>
+  //           <tr>
+  //             <td>Spread</td>
+  //             <td>{{  quick_search_form.Spread }} </td>    
+  //           </tr>
+  //         </table>
+  //         -->
+<!--   //             {% csrf_token %}
+  //         <input type="submit" name = "Home" value="Submit" />
+  //     </form> -->
+
   <script id = "broad_range_template" type = "template">
-          <form action="{% url 'home:broad_range' %}" method="POST">
+          <form id="Moodys_Form" action="{% url 'home:broad_range' %}" method="POST">
 
 
           <div class="container-fluid">
@@ -94,7 +102,7 @@
               <div class="col-md-2">Maximum</div>
             </div>
             <div class="row">
-              <div class="col-md-2">Quantity</div>
+           <!--   <div class="col-md-2">Quantity</div>
               <div class="col-md-2">{{ bond_range_form.quantity_min}}</div>
               <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
             </div>
@@ -112,7 +120,7 @@
               <div class="col-md-2"> Price </div>
               <div class="col-md-2">{{ bond_range_form.price_min }}</div>
               <div class="col-md-2">{{ bond_range_form.price_max }}</div>
-          </div>
+          </div> -->
           <div class="row">
               <div class="col-md-2"> Moodys </div>
               <div class="col-md-2">{{ bond_range_form.Moodys_Rating_Minimum }} </div>
@@ -134,6 +142,21 @@
 
       </form>
 </script>
+<script id = "broad_range_get_moody" type = "template">
+  
+
+        <% #get_moody_BAA %>
+          <h3>Moodys</h3>
+          <% #data %>
+            <p><b>End Date: </b> <% end_date %></p>
+            <p><b>Frequency:</b> <% frequency %></p>
+            <p><b>Order:</b> <% order %></p>
+            <p><b>Start Date:</b> <% start_date %></p>
+          <% /data %>
+        <% /get_moody_BAA %>
+    
+    </script>
+
 
            <!--
         <table id = "1"style="width:50%">
@@ -247,11 +270,11 @@
    </div>
   </form>
   </script>
-  <script id = "search_template" type = "template">  
+  <script id = "quick_search_template" type = "template">  
             <h1>Search</h1>
-            <form action = "{% url 'home:search' %}" method = "POST">
+            <form action = "{% url 'home:quick_search' %}" method = "POST">
            <label>Search By:</label>
-            <select name = "search_method">
+            <select name = "quick_search_method">
               <option selected>Get Last Sale</option>
               <option>Get Price Composite</option>
               <option>Get Daily Open High Low Close Price</option>
@@ -261,16 +284,156 @@
               <option>Get Duration and Convexity</option>
             </select>
             <br>
-                    Identifier: {{ search_form.Identifier }}
+                    Identifier: {{ quick_search_form.Identifier }}
                     <br>
-                    Identifier Type: {{ search_form.IdentifierType }}
+                    Identifier Type: {{ quick_search_form.IdentifierType }}
                     <br>
-                    Price Source: {{ search_form.PriceSource }}
+                    Price Source: {{ quick_search_form.PriceSource }}
             <br>
-            <input type="submit" value="Search">
-        </div>
-      </form>
+            <input type="submit" value="Quick Search">
+          </form>
+          <div class = "results">
+          </div>
   </script>
+  <script id = "quick_search_get_last_sale" type = "template">
+  
+
+    <% #get_last_sale %>
+      <h3>Last Sale</h3>
+      <% #BondLastSale %>
+        <p><b>Short Name:</b> <% ShortName %></p>
+        <p><b>Symbol:</b> <% Symbol %></p>
+        <p><b>Last Sale Date:</b> <% LastSaleDate %></p>
+        <p><b>Yield to Maturity:</b> <% YieldToMaturity %></p>
+        <p><b>Last Sale Price:</b> <% LastSale %></p>
+        <p><b>Last Sale Size:</b> <% LastSaleSize %></p>
+        <p><b>Price Used for Calculations:</b> <% PriceUsedForCalculations %></p>
+      <% /BondLastSale %>
+    <% /get_last_sale %>
+    <% ^get_last_sale %>
+      <p>No Data</p>
+    <% /get_last_sale %>
+
+  </script>
+    <script id = "quick_search_get_price_composite" type = "template">
+    <% #get_price_composite %>
+      <h3>Price Composite</h3>
+      <% #TradedPrice %>
+        <p><b>Short Name:</b> <% ShortName %></p>
+        <p><b>Symbol:</b> <% Symbol %></p>
+        <p><b>Last Sale Price:</b> <% LastSale %></p>
+        <p><b>Yield to Maturity:</b> <% YieldToMaturity %></p>
+        <p><b>Daily High Price:</b> <% DailyHigh %></p>
+        <p><b>Daily High Date:</b> <% DailyHighDate %></p>
+        <p><b>Daily Low:</b> <% DailyLow %></p>
+        <p><b>Daily Low Date:</b> <% DailyLowDate %></p>
+        <p><b>Last Sale Time:</b> <% LastSaleTime %></p>
+        <p><b>Last Sale:</b> <% LastSale %></p>
+        <p><b>Last Sale Size:</b> <% LastSaleSize %></p>
+        <p><b>Last Year Close:</b> <% LastYearClose %></p>
+        <p><b>Price Used for Calculations:</b> <% PriceUsedForCalculations %></p>
+        <p><b>Price Used for Calculations Date:</b>  <% PriceUsedForCalculationsDate %></p>
+        <p><b>Last Sale Size:</b> <% LastSaleSize %></p>
+      <% /TradedPrice %>
+    <% /get_price_composite %>
+    </script>
+    <script id = "quick_search_get_daily_open_high_low_close_price" type = "template">
+
+    <% #get_daily_open_high_low_close_price %>
+      <h3>Daily High/Low Open/Close</h3>
+      <% #DailyOpenHighLowClose %>
+      <p><b>Daily Close: </b><% DailyClose %></p>
+      <p><b>Daily High: </b><% DailyHigh %></p>
+      <p><b>Daily Low: </b><% DailyLow %></p>
+      <p><b>Short Name: </b><% ShortName %></p>
+      <p><b>Symbol: </b><% Symbol %></p>
+      <p><b>High/Low/Open/Close Date: </b><% DailyHighDate %></p>
+      <% /DailyOpenHighLowClose %>
+    <% /get_daily_open_high_low_close_price %>
+  </script>
+
+  <script id = "quick_search_get_yearly_high_low_price" type = "template">
+    <% #get_yearly_high_low_price %>
+      <h3>Yearly High/Low</h3>
+      <% #YearlyHighLow %>
+        <p><b>ShortName</b>: <% ShortName %></p>
+        <p><b>Symbol</b>: <% Symbol %></p>
+        <p><b>Yearly High</b>: <% YearlyHigh %></p>
+        <p><b>Yearly Low</b>: <% YearlyLow %></p>
+        <p><b>Yearly High Date</b>: <% YearlyHighDate %></p>
+        <p><b> Yearly Low Date</b> : <% YearlyLowDate %></p>
+      <% /YearlyHighLow %>
+    <% /get_yearly_high_low_price %>
+      
+  </script>
+
+  <script id = "quick_search_get_accrued_interest" type = "template">
+  <% #get_accrued_interest %>
+      <h3>Accrued Interest</h3>
+        <% #BondAccruedInterest %>
+        <p><b> ShortName</b>: <% ShortName %></p>
+        <p><b> Symbol: </b> <% Symbol %></p>
+        <p><b>Interest Accrued</b>: <% AccruedInterest %></p>
+        <p><b>Date</b>: <% AccruedInterestDate %></p>
+        <p><b>Day Count</b>: <% AccruedInterestDayCount %></p>
+        <p><b>Ex Dividend Accrued Interese Set Date</b>: <% ExDividendAccruedInterestSetDate %></p>
+        <p><b>Ex Dividend Accrued Interese Trade Date</b>: <% ExDividendAccruedInterestTradeDate %></p>
+        <p><b>Number of Accrued Days</b>: <% NoOfAccruedDays %></p>
+      <% /BondAccruedInterest %>
+    <% /get_accrued_interest %>
+  </script>
+
+  <script id = "quick_search_get_bond_calculation" type = "template">
+  <% #get_bond_calculation %>
+      <h3>Bond Calculation</h3>
+        <% #BondYield %>
+        
+        <p><b> Current Yield: </b> <% Currency %></p>
+        <p><b> Discount Yield :</b>: <% DiscountYield %></p>
+        <p><b>Price Calculation</b>: <% PriceUsedForCalculations %></p>
+        <p><b>Date: </b>: <% PriceUsedForCalculationsDate %></p>
+        <p><b>Time: </b>: <% PriceUsedForCalculationsTime %></p>
+        <p><b>Short Name: </b>: <% ShortName %></p>
+        <p><b>Yield To Maturity:</b>: <% YieldToMaturity %></p>
+        <p><b>Yield To Maturity Date:</b>: <% YieldToMaturityDate %></p>
+        <p><b>Yield to Maturity Time:</b>: <% YieldToMaturityTime %></p>
+        <p><b>Yield To Next Call:</b>: <% YieldToNextCall %></p>
+        <p><b>Yield To Next Call Date:</b>: <% YieldToNextCallDate %></p>
+       <% /BondYield %>
+    <% /get_bond_calculation %>
+  </script>
+
+  <script id = "quick_search_get_duration_and_convexity" type = "template">
+  <% #get_duration_and_convexity %>
+      <h3>Bond Calculation</h3>
+        <% #BondConvexity %>
+        <p><b>Short Name: </b> <% ShortName %></p>
+        <p><b> Symbol: </b> <% Symbol %></p>
+        <p><b> Convexity to Maturity: </b> <% ConvexityToMaturity %></p>
+        <p><b> Convexity to Maturity Date: </b> <% ConvexityToMaturityDate %></p>
+        <p><b> Convexity to Worst: </b> <% ConvexityToWorst %></p>
+        <p><b> Convexity to Worst Date: </b> <% ConvexityToWorstDate %></p>
+        <p><b> Price Used for Calculations: </b> <% PriceUsedForCalculations %></p>
+         <% /BondConvexity %>
+         <% #BondDuration %>
+         <p><b> Duration to Maturity: </b> <% DurationToMaturity %></p>
+         <p><b> Duration to Maturity Date: </b> <% DurationToMaturityDate %></p>
+         <p><b> Duration to Next Call: </b> <% DurationToNextCall %></p>
+         <p><b> Duration to Next Coupon Maturity: </b> <% DurationToNextCouponMaturity %></p>
+         <p><b> Duration to Next Coupon Maturity Date: </b> <% DurationToNextCouponMaturityDate %></p>
+         <p><b> Duration to Worst: </b> <% DurationToWorst %></p>
+         <p><b> DurationToWorstDate: </b> <% DurationToWorstDate %></p>
+         <p><b> Modified Duration to Maturity: </b> <% ModifiedDurationToMaturity %></p>
+         <p><b> Modified Duration to Maturity Date: </b> <% ModifiedDurationToMaturityDate %></p>
+         <p><b>Modified Duration to Next Call: </b> <% ModifiedDurationToNextCall %></p>
+         <p><b> Price Used for Calculations: </b> <% PriceUsedForCalculations %></p>
+         <p><b> Price Used for Calculations Date: </b> <% PriceUsedForCalculationsDate %></p>
+          <% /BondDuration %>
+
+
+    <% /get_duration_and_convexity %>
+  </script>
+
   <script id = "market_search_template" type = "template">
     
           <h1> Markets </h1>
@@ -335,18 +498,10 @@
             </tr>
             <tr>
       </div>
-      <div>
-      <div>Description</div>
-      <div> {{quick_search_form.description}} </div>
-      </div>
           <h3> Attributes: </h3>
     
          <table id = "attribute" style="width:30%">
-
-            <div>
-            <div>State</div>
-            <div>{{ quick_search_form.state }}</div>
-            </div>
+            <tr>
                         
               
                 <th colspan="1"></th>
