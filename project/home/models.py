@@ -96,10 +96,13 @@ class BroadRange(models.Model):
 	# OID min/max
 	Moodys_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	Moodys_Rating_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
-	SandP_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
-	SandP_Rating_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
-	Fitch_Ratings_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
-	Fitch_Ratings_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+	Merrill_Lynch_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+	Merrill_Lynch_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+
+	# SandP_Rating_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+	# SandP_Rating_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+	# Fitch_Ratings_Minimum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
+	# Fitch_Ratings_Maximum = models.CharField(max_length = 4, choices=Ratings_Choices, default = "AAA")
 	
 class QuickSearch(models.Model):
 	state = USStateField()

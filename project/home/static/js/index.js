@@ -54,8 +54,30 @@ $(document).ready(function(){
 		var characteristic_search_template = $("#characteristic_search_template").html();
 		$("#form-zone").html(characteristic_search_template);
 	});
+	$("#form-zone").on("submit", "form#Moodys_Form", function(event){
+		event.preventDefault();
+		event.stopPropagation();
+		var $this = $(this);
+		console.log($this.serialize());
+		$.ajax({
+			method:$this.attr("method"),
+			url:$this.attr("action"),
+			data:$this.serialize(),
+		}).success(function(data){
+			// $(".results").html(JSON.stringify(data));
+			console.log(data);
+			var template = $('#broad_range_'+Object.keys(data)[0]).html();
+			console.log(template)
+			var rendered = Mustache.render(template, data);
+
+			$(".results").html(rendered);
+		}).fail(function(){
+			console.log(arguments)
+		});
+	});
 	$("#form-zone").on("submit", "form", function(event){
 		event.preventDefault();
+		if (this.id==="Moodys_Form") return false;
 		var $this = $(this);
 		console.log($this.serialize());
 		$.ajax({
@@ -74,8 +96,9 @@ $(document).ready(function(){
 			console.log(arguments)
 		});
 	});
-		$("#form-zone").on("submit", "form#Moodys_Form", function(event){
+	$("#form-zone").on("submit", "form", function(event){
 		event.preventDefault();
+		if (this.id==="Moodys_Form") return false;
 		var $this = $(this);
 		console.log($this.serialize());
 		$.ajax({

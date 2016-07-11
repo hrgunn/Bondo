@@ -141,7 +141,7 @@ class QuickSearch(View):
 				return JsonResponse({search_method: response.json()})
 			else:
 				return JsonResponse({'error': response.text}, status = response.status_code)
-		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
+		return JsonResponse({'error':'something went wrong','errors':form.errors.as_json()},status=500)
 
 			# data['get_last_sale'] = data['get_last_sale'].text
 			# # get_last_sales = wrapper.get_last_sales(**form.data)
@@ -181,16 +181,22 @@ class BroadSearch(View):
 	def post(self, request):
 		form = BroadRangeForm(data=request.POST)
 		if form.is_valid():
-			wrapper = MoodyAPI()
-			if request.POST.get("Moodys_Rating_Maximum") == "AAA":
-				response=wrapper.get_moody_AAA()
-			else:
+			wrapper_moodys = MoodyAPI()
+			wrapper_merrill = Merrill_Lynch()
+			if request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "AAA" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
+				response_moodys=wrapper_moodys.get_moody_AAA()
+				response_merrill=wrapper_merrill.get_merrill_A()
+			elif True:
 				response=wrapper.get_moody_BAA()
+			elif request.POST.get("Merrill_Lynch_Maximum") == "AAA":
+				response_merrill=wrapper_merrill.get_merrill_A()
+			elif request.POST.get("Merrill_Lynch_Minimum") == "BBB":
+				response_merrill=wrapper_merrill.get_merrill_B() == "BBB"
 
-			if 200<=response.status_code<400:
-				return JsonResponse({"get_moody": response.json()})
+			if 200<=response_moodys.status_code<400 and 200<=response_merrill.status_code<400:
+				return JsonResponse({"get_moody": response_moodys.json(), "get_merrill": response_merrill.json()})
 			else:
-				return JsonResponse({'error': response.text}, status = response.status_code)
+				return JsonResponse({'error': response_moodys.text}, status = response_moodys.status_code)
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 			# return render(request, self.template_name, {'form': form})
 
@@ -243,6 +249,7 @@ class Moodys(View):
 			# return render(request, self.template_name, {'form': form})
 			print (form.data)
 			data = wrapper.get_moody(**form.data)
+			print (data)
 			return JsonResponse({'data': data.text})
 		return JsonResponse({'error':'shit something went wrong','errors':form.errors.as_json()},status=500)
 

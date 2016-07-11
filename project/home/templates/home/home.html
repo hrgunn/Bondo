@@ -101,40 +101,48 @@
               <div class="col-md-2">Minimum</div>
               <div class="col-md-2">Maximum</div>
             </div>
-            <div class="row">
-           <!--   <div class="col-md-2">Quantity</div>
-              <div class="col-md-2">{{ bond_range_form.quantity_min}}</div>
-              <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
-            </div>
-            <div class="row">
-              <div class="col-md-2">Years</div>
-              <div class="col-md-2">{{ bond_range_form.quantity_min}} </div>
-              <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
-            </div>
-          <div class="row">
-              <div class="col-md-2">Coupon </div>
-              <div class="col-md-2">{{  bond_range_form.coupon_min }}</div>
-              <div class="col-md-2">{{  bond_range_form.coupon_max }}</div>
-          </div>
-          <div class="row">
-              <div class="col-md-2"> Price </div>
-              <div class="col-md-2">{{ bond_range_form.price_min }}</div>
-              <div class="col-md-2">{{ bond_range_form.price_max }}</div>
-          </div> -->
+          <!--
+            // <div class="row">
+          //  <div class="col-md-2">Quantity</div>
+          //     <div class="col-md-2">{{ bond_range_form.quantity_min}}</div>
+          //     <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
+          //   </div>
+          //   <div class="row">
+          //     <div class="col-md-2">Years</div>
+          //     <div class="col-md-2">{{ bond_range_form.quantity_min}} </div>
+          //     <div class="col-md-2">{{ bond_range_form.quantity_max}}</div>
+          //   </div>
+          // <div class="row">
+          //     <div class="col-md-2">Coupon </div>
+          //     <div class="col-md-2">{{  bond_range_form.coupon_min }}</div>
+          //     <div class="col-md-2">{{  bond_range_form.coupon_max }}</div>
+          // </div>
+          // <div class="row">
+          //     <div class="col-md-2"> Price </div>
+          //     <div class="col-md-2">{{ bond_range_form.price_min }}</div>
+          //     <div class="col-md-2">{{ bond_range_form.price_max }}</div>
+          // </div>
+          -->
           <div class="row">
               <div class="col-md-2"> Moodys </div>
               <div class="col-md-2">{{ bond_range_form.Moodys_Rating_Minimum }} </div>
               <div class="col-md-2">{{ bond_range_form.Moodys_Rating_Maximum }}</div>
             </div>
-          <div class="row">
+          <!--<div class="row">
               <div class="col-md-2"> SandP </div>
               <div class="col-md-2">{{ bond_range_form.SandP_Rating_Minimum }}</div>
               <div class="col-md-2">{{ bond_range_form.SandP_Rating_Maximum }} </div>
           </div>
-          <div class="row">
+              <div class="row">
               <div class="col-md-2"> Fitch </div>
               <div class="col-md-2">{{ bond_range_form.Fitch_Ratings_Minimum }}</div>
-              <div class="col-md-2">{{ bond_range_form.Fitch_Ratings_Maximum }} </div>
+              <div class="col-md-2">{{ bond_range_form.Fitch_Ratings_Maximum }} </div> -->
+              <div class="row">
+              <div class="col-md-2"> Merrill Lynch </div>
+              <div class="col-md-2">{{ bond_range_form.Merrill_Lynch_Minimum }}</div>
+              <div class="col-md-2">{{ bond_range_form.Merrill_Lynch_Maximum }} </div>
+          </div>
+
           </div>
         </div>
         </div>
@@ -156,6 +164,20 @@
         <% /get_moody_BAA %>
     
     </script>
+ <script id = "broad_range_get_merrill" type = "template">
+  
+
+        <% #get_merrill_A %>
+          <h3>Merrill Lynch</h3>
+          <% #data %>
+            <p><b>End Date: </b> <% end_date %></p>
+            <p><b>Frequency:</b> <% frequency %></p>
+            <p><b>Order:</b> <% order %></p>
+            <p><b>Start Date:</b> <% start_date %></p>
+          <% /data %>
+        <% /get_merrill_A %>
+    
+    </script> 
 
 
            <!--

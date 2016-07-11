@@ -225,26 +225,42 @@ class MoodyAPI:
 
 class Merrill_Lynch:
 	def __init__(self):
-		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
+		self.base_url = "https://www.quandl.com/api/v3/datasets/ML/{dataset_code}/data.json"
 		self.access_token = {"_api_key": settings.MERRILL_LYNCH_BOND_API_KEY}
 
 	def _get(self, path, **kwargs):
-		url = self.base_url+path
+		url = self.base_url.format(dataset_code = path)
 		kwargs.update(self.access_token)
 		return requests.get(url,params=kwargs)
 
-	def get_merrill(self,**kwargs):
+	def get_merrill_A(self,**kwargs):
 		"""
 		@param
 		kwargs=>DatabaseCode, PerPage, SortBy, Page
 		"""
-		merrill = self._get("GetMerrill", **kwargs)
+		merrill = self._get("ATRI", **kwargs)
 		return merrill
 
-class ChicagoMercantileExchange:
+	def get_merrill_B(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		merrill = self._get("ML/BOAS", **kwargs)
+		return merrill
+
+	def get_merrill_Emerging_Markets_Corporate(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		merrill = self._get("ML/EMCBI", **kwargs)
+		return merrill
+
+class FederalReserve:
 	def __init__(self):
-		self.base_url = "https://www.quandl.com/api/v3/datasets.json"
-		self.access_token = {"_api_key": settings.CHICAGO_MERCANTILE_EXCHANGE_API_KEY}
+		self.base_url = "https://www.quandl.com/api/v3/datasets/CME/{dataset_code}/data.json"
+		self.access_token = {"_api_key": settings.FEDERAL_RESERVE_ECONOMIC_API_KEY}
 
 	def _get(self, path, **kwargs):
 		url = self.base_url+path
@@ -256,10 +272,24 @@ class ChicagoMercantileExchange:
 		@param
 		kwargs=>DatabaseCode, PerPage, SortBy, Page
 		"""
-		chicago = self._get("GetChicago", **kwargs)
+		chicago = self._get("SSIN2016", **kwargs)
 		return chicago
 
+	def get_chicago(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		chicago = self._get("SSIV2016", **kwargs)
+		return chicago
 
+	def get_chicago(self,**kwargs):
+		"""
+		@param
+		kwargs=>DatabaseCode, PerPage, SortBy, Page
+		"""
+		chicago = self._get("YWU2016", **kwargs)
+		return chicago
 
 
 

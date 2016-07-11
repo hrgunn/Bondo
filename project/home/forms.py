@@ -12,8 +12,8 @@ class BroadRangeForm(forms.ModelForm):
     # "quantity_max",
     # "years_min",
     # "years_max",
-    # "Maturity Minimum",
-    # "Maturity Maximum",
+    # # "Maturity Minimum",
+    # # "Maturity Maximum",
     # "coupon_min",
     # "coupon_max",
     # "price_min",
@@ -24,10 +24,12 @@ class BroadRangeForm(forms.ModelForm):
     # "OID Yield Maximum",
     "Moodys_Rating_Minimum",
     "Moodys_Rating_Maximum",
-    "SandP_Rating_Minimum",
-    "SandP_Rating_Maximum",
-    "Fitch_Ratings_Minimum",
-    "Fitch_Ratings_Maximum",
+    "Merrill_Lynch_Minimum",
+    "Merrill_Lynch_Maximum",
+    # "SandP_Rating_Minimum",
+    # "SandP_Rating_Maximum",
+    # "Fitch_Ratings_Minimum",
+    # "Fitch_Ratings_Maximum",
   ]
 
 class QuickSearchForm(forms.Form):
