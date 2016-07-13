@@ -1,3 +1,26 @@
+var drawGraph = function draw_graph (dataset){
+	console.log(dataset);
+	var chart = c3.generate({
+		bindto: '.results',
+	    data: {
+	    	x:'Dates',
+	    	xFormat: '%Y-%m-%d',
+	    	columns: [
+	        	dataset.dates,
+	        	dataset.data
+	        ]
+	    },
+	    axis: {
+	        x: {
+	            type: 'timeseries',
+	            tick: {
+	                format: '%Y-%m-%d'
+	            }
+	        }
+	    }
+	});
+};
+
 $(document).ready(function(){
 
 	Mustache.parse($('#quick_search_get_last_sale').html(),['<%','%>']);
@@ -59,18 +82,35 @@ $(document).ready(function(){
 		event.stopPropagation();
 		var $this = $(this);
 		console.log($this.serialize());
+		console.log($this.attr("method"));
 		$.ajax({
 			method:$this.attr("method"),
 			url:$this.attr("action"),
 			data:$this.serialize(),
 		}).success(function(data){
 			// $(".results").html(JSON.stringify(data));
-			console.log(data);
-			var template = $('#broad_range_'+Object.keys(data)[0]).html();
-			console.log(template)
-			var rendered = Mustache.render(template, data);
-
-			$(".results").html(rendered);
+			// var template = $('#broad_range_'+Object.keys(data)[0]).html();
+			// console.log(template)
+			// var rendered = Mustache.render(template, data);
+			var moodys_dataset = data.get_moody.dataset_data.data
+			var date_range = moodys_dataset.map(function(element, index){
+				return element[0];
+			});
+			date_range.unshift('Dates');
+			var moodys = moodys_dataset.map(function(element, index){
+				// console.log(element);
+				return element[1];
+				// return {date:element[0], value:element[1]};
+			});
+			moodys.unshift('Moody');
+			drawGraph({dates: date_range, data:moodys});
+			// var merrill_dataset = data.get_merrill.dataset_data.data
+			// var merrill = merrill_dataset.map(function(element, index){
+			// 	return {date:element[0], value:element[1]};
+			// });
+			// $(".results").html(rendered);
+			console.log(merrill);
+			console.log(moodys);
 		}).fail(function(){
 			console.log(arguments)
 		});
@@ -118,4 +158,3 @@ $(document).ready(function(){
 		});
 	});
 });
-console.log("hello");

@@ -26,6 +26,7 @@ class BroadRangeForm(forms.ModelForm):
     "Moodys_Rating_Maximum",
     "Merrill_Lynch_Minimum",
     "Merrill_Lynch_Maximum",
+    # "Federal_Reserve",
     # "SandP_Rating_Minimum",
     # "SandP_Rating_Maximum",
     # "Fitch_Ratings_Minimum",

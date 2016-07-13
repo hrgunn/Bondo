@@ -5,9 +5,12 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script>
+    <script type="text/javascript" src= "https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
     <script type="text/javascript" src = "{% static 'js/index.js' %}"></script>
   </head>
   <body>
@@ -142,13 +145,18 @@
               <div class="col-md-2">{{ bond_range_form.Merrill_Lynch_Minimum }}</div>
               <div class="col-md-2">{{ bond_range_form.Merrill_Lynch_Maximum }} </div>
           </div>
-
           </div>
+          <input type="submit" name = "Home" value="Submit" />
+          </form>
+      <!--  <form id="Federal_Form" action="{% url 'home:broad_range' %}" method="POST">
+          <div class = "row">
+              <div class = "col-md-3"> Federal Reserve Numbers </div>
+              <div class="col-md-2">{{ bond_range_form.Federal_Reserve }}</div>
+          </div>
+        <div class="col-md-2">
+         <input type="submit" name = "FedButton" value="Submit" />
         </div>
-        </div>
-         <input type="submit" name = "Home" value="Submit" />
-
-      </form>
+      </form> -->
 </script>
 <script id = "broad_range_get_moody" type = "template">
   
@@ -178,7 +186,22 @@
         <% /get_merrill_A %>
     
     </script> 
+ <!--<script id= "broad_range_get_federal" type = "template">
 
+          <% #get_federal_ngdp %>
+          <h3>Federal Reserve </h3>
+          <% #data %>
+            <p><b>Name</b>: <% name %></p>
+            <p><b>Description</b>: <% description %></p>
+            <p><b>Last Refreshed</b>: <% refreshed at %></p>
+            <p><b>Newest Available Date</b>: <% newest available %></p>
+            <p><b>Frequency</b>: <% frequency %></p>
+            <p><b>Premium</b>: <% premium %></p>
+          <% /data %>
+          <% /get_federal_ngdp %>
+
+
+      </script> -->
 
            <!--
         <table id = "1"style="width:50%">

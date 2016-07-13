@@ -257,39 +257,39 @@ class Merrill_Lynch:
 		merrill = self._get("ML/EMCBI", **kwargs)
 		return merrill
 
-class FederalReserve:
-	def __init__(self):
-		self.base_url = "https://www.quandl.com/api/v3/datasets/CME/{dataset_code}/data.json"
-		self.access_token = {"_api_key": settings.FEDERAL_RESERVE_ECONOMIC_API_KEY}
+# class Federal_Reserve:
+# 	def __init__(self):
+# 		self.base_url = "https://www.quandl.com/api/v3/datasets/FRED/{dataset_code}/data.json"
+# 		self.access_token = {"_api_key": settings.FEDERAL_RESERVE_ECONOMIC_API_KEY}
 
-	def _get(self, path, **kwargs):
-		url = self.base_url+path
-		kwargs.update(self.access_token)
-		return requests.get(url,params=kwargs)
+# 	def _get(self, path, **kwargs):
+# 		url = self.base_url+path
+# 		kwargs.update(self.access_token)
+# 		return requests.get(url,params=kwargs)
 
-	def get_chicago(self,**kwargs):
-		"""
-		@param
-		kwargs=>DatabaseCode, PerPage, SortBy, Page
-		"""
-		chicago = self._get("SSIN2016", **kwargs)
-		return chicago
+# 	def get_federal_ngdp(self,**kwargs):
+# 		"""
+# 		@param
+# 		kwargs=>DatabaseCode, PerPage, SortBy, Page
+# 		"""
+# 		chicago = self._get("NGDPPOT", **kwargs)
+# 		return federal
 
-	def get_chicago(self,**kwargs):
-		"""
-		@param
-		kwargs=>DatabaseCode, PerPage, SortBy, Page
-		"""
-		chicago = self._get("SSIV2016", **kwargs)
-		return chicago
+# 	def get_federal_nroust(self,**kwargs):
+# 		"""
+# 		@param
+# 		kwargs=>DatabaseCode, PerPage, SortBy, Page
+# 		"""
+# 		chicago = self._get("NROUST", **kwargs)
+# 		return federal
 
-	def get_chicago(self,**kwargs):
-		"""
-		@param
-		kwargs=>DatabaseCode, PerPage, SortBy, Page
-		"""
-		chicago = self._get("YWU2016", **kwargs)
-		return chicago
+# 	def get_federal_nrou(self,**kwargs):
+# 		"""
+# 		@param
+# 		kwargs=>DatabaseCode, PerPage, SortBy, Page
+# 		"""
+# 		chicago = self._get("NROU", **kwargs)
+# 		return federal
 
 
 

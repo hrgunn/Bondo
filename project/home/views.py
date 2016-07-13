@@ -19,7 +19,7 @@ from django.contrib.auth.forms import (
 )
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from home.wrapper import XigniteCorporateBonds, XigniteBondMaster, MoodyAPI, ChicagoMercantileExchange, Merrill_Lynch
+from home.wrapper import XigniteCorporateBonds, XigniteBondMaster, MoodyAPI, Merrill_Lynch
 
 
 # Create your views here.
@@ -183,17 +183,38 @@ class BroadSearch(View):
 		if form.is_valid():
 			wrapper_moodys = MoodyAPI()
 			wrapper_merrill = Merrill_Lynch()
+			# wrapper_federal = Federal_Reserve()
+
+			# if request.POST.get("Federal_Reserve" == "Nominal Potential Gross Domestic Product"):
+			# 	response_federal = wrapper_federal.get_federal_ngdp()
+			# elif request.POST.get("Federal_Reserve" == "Natural Rate of Unemployment (Short-Term)"):
+			# 	response_federal = wrapper_federal.get_federal_nroust()
+			# elif request.POST.get("Federal_Reserve" == "Natural Rate of Unemployment (Long-Term)"):
+			# 	response_federal = wrapper_federal.get_federal_nrou()
+
 			if request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "AAA" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
 				response_moodys=wrapper_moodys.get_moody_AAA()
 				response_merrill=wrapper_merrill.get_merrill_A()
-			elif True:
+				print(response_moodys)
+				print(response_merrill)
+			elif request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "BBB" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
 				response=wrapper.get_moody_BAA()
-			elif request.POST.get("Merrill_Lynch_Maximum") == "AAA":
+				response_moodys=wrapper_moodys.get_moody_AAA()
 				response_merrill=wrapper_merrill.get_merrill_A()
-			elif request.POST.get("Merrill_Lynch_Minimum") == "BBB":
-				response_merrill=wrapper_merrill.get_merrill_B() == "BBB"
-
+			elif request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "BBB" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "BBB":
+				response_moodys=wrapper_moodys.get_moody_AAA()
+				response_merrill=wrapper_merrill.get_merrill_A()
+				response_moodys=wrapper_moodys.get_moody_BAA()
+				response_merrill=wrapper_merrill.get_merrill_B()
+			elif request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "BBB" and request.POST.get("Merrill_Lynch_Maximum") == "BBB" and request.POST.get("Merrill_Lynch_Minimum") == "BBB":
+				response_moodys=wrapper_moodys.get_moody_AAA()
+				response_moodys=wrapper_moodys.get_moody_BAA()
+				response_merrill=wrapper_merrill.get_merrill_B()
+			elif request.POST.get("Moodys_Rating_Maximum") == "BBB" and request.POST.get("Moodys_Rating_Minimum") == "BBB" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
+				response_moodys=wrapper_moodys.get_moody_BAA()
+				response_merrill=wrapper_merrill.get_merrill_A()
 			if 200<=response_moodys.status_code<400 and 200<=response_merrill.status_code<400:
+				print(response_merrill.json(), response_moodys.json())
 				return JsonResponse({"get_moody": response_moodys.json(), "get_merrill": response_merrill.json()})
 			else:
 				return JsonResponse({'error': response_moodys.text}, status = response_moodys.status_code)
