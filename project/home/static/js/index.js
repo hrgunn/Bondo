@@ -8,13 +8,20 @@ var drawGraph = function draw_graph (dataset){
 	    	columns: [
 	        	dataset.dates,
 	        	dataset.data
-	        ]
+	        ],
+		    color: {
+	        	pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+	    	}
+	    
+
 	    },
+
 	    axis: {
 	        x: {
 	            type: 'timeseries',
 	            tick: {
 	                format: '%Y-%m-%d'
+	                // format: d3.timeFormat("%x")
 	            }
 	        }
 	    }
@@ -103,12 +110,19 @@ $(document).ready(function(){
 				// return {date:element[0], value:element[1]};
 			});
 			moodys.unshift('Moody');
+			var template = $('#broad_range_'+Object.keys(data)[0]).html();
+			console.log(template)
+			var rendered = Mustache.render(template, data);
+
+			$(".results").html(rendered);
 			drawGraph({dates: date_range, data:moodys});
-			// var merrill_dataset = data.get_merrill.dataset_data.data
-			// var merrill = merrill_dataset.map(function(element, index){
-			// 	return {date:element[0], value:element[1]};
-			// });
-			// $(".results").html(rendered);
+
+			var merrill_dataset = data.get_merrill.dataset_data.data
+			var merrill = merrill_dataset.map(function(element, index){
+				return {date:element[0], value:element[1]};
+			});
+			$(".results").html(rendered);
+			drawGraph({dates: date_range, data:moodys});
 			console.log(merrill);
 			console.log(moodys);
 		}).fail(function(){
