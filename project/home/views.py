@@ -195,8 +195,6 @@ class BroadSearch(View):
 			if request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "AAA" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
 				response_moodys=wrapper_moodys.get_moody_AAA()
 				response_merrill=wrapper_merrill.get_merrill_A()
-				print(response_moodys)
-				print(response_merrill)
 			elif request.POST.get("Moodys_Rating_Maximum") == "AAA" and request.POST.get("Moodys_Rating_Minimum") == "BBB" and request.POST.get("Merrill_Lynch_Maximum") == "AAA" and request.POST.get("Merrill_Lynch_Minimum") == "AAA":
 				response=wrapper.get_moody_BAA()
 				response_moodys=wrapper_moodys.get_moody_AAA()
@@ -214,7 +212,6 @@ class BroadSearch(View):
 				response_moodys=wrapper_moodys.get_moody_BAA()
 				response_merrill=wrapper_merrill.get_merrill_A()
 			if 200<=response_moodys.status_code<400 and 200<=response_merrill.status_code<400:
-				print(response_merrill.json(), response_moodys.json())
 				return JsonResponse({"get_moody": response_moodys.json(), "get_merrill": response_merrill.json()})
 			else:
 				return JsonResponse({'error': response_moodys.text}, status = response_moodys.status_code)

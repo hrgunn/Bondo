@@ -1,5 +1,5 @@
 var drawGraph = function draw_graph (dataset){
-	console.log(dataset);
+	
 	var chart = c3.generate({
 		bindto: '.results',
 	    data: {
@@ -26,6 +26,15 @@ var drawGraph = function draw_graph (dataset){
 	        }
 	    }
 	});
+	return chart;
+};
+
+var addDataToGraph = function add_data_to_graph(chart, dataset){
+	chart.load({
+		columns: [
+			dataset.data,
+		]
+	});
 };
 
 $(document).ready(function(){
@@ -49,35 +58,34 @@ $(document).ready(function(){
 		// places form on the page
 		$("#form-zone").html(template);
 	});
-	console.log($("#broad_range_search"));
 	$("#broad_range_search").on("click", function(event){
 		event.preventDefault(); 
 		// var $this = $(this);
 		var broad_template = $("#broad_range_template").html();
 		$("#form-zone").html(broad_template);
 	});
-	console.log($("#screen_bond_search"));
+	
 	$("#screen_bond_search").on("click", function(event){
 		event.preventDefault(); 
 		// var $this = $(this);
 		var screen_template = $("#screen_bond_template").html();
 		$("#form-zone").html(screen_template);
 	});
-	console.log($("#search"));
+	
 	$("#search").on("click", function(event){
 		event.preventDefault(); 
 		// var $this = $(this);
 		var search_template = $("#search_template").html();
 		$("#form-zone").html(search_template);
 	});
-	console.log($("#market_search"));
+	
 	$("#market_search").on("click", function(event){
 		event.preventDefault(); 
 		// var $this = $(this);
 		var market_search_template = $("#market_search_template").html();
 		$("#form-zone").html(market_search_template);
 	});
-	console.log($("#characteristic_search"));
+	
 	$("#characteristic_search").on("click", function(event){
 		event.preventDefault(); 
 		// var $this = $(this);
@@ -99,6 +107,8 @@ $(document).ready(function(){
 			// var template = $('#broad_range_'+Object.keys(data)[0]).html();
 			// console.log(template)
 			// var rendered = Mustache.render(template, data);
+			// console.log(data);
+			// return;
 			var moodys_dataset = data.get_moody.dataset_data.data
 			var date_range = moodys_dataset.map(function(element, index){
 				return element[0];
@@ -110,23 +120,21 @@ $(document).ready(function(){
 				// return {date:element[0], value:element[1]};
 			});
 			moodys.unshift('Moody');
-			var template = $('#broad_range_'+Object.keys(data)[0]).html();
-			console.log(template)
-			var rendered = Mustache.render(template, data);
-
-			$(".results").html(rendered);
-			drawGraph({dates: date_range, data:moodys});
+			console.log("Build Graph");
+			var myChart = drawGraph({dates: date_range, data:moodys});
 
 			var merrill_dataset = data.get_merrill.dataset_data.data
 			var merrill = merrill_dataset.map(function(element, index){
-				return {date:element[0], value:element[1]};
+				return element[1];
+				// return {date:element[0], value:element[1]};
 			});
-			$(".results").html(rendered);
-			drawGraph({dates: date_range, data:moodys});
-			console.log(merrill);
-			console.log(moodys);
+			merrill.unshift('Merrill');
+			console.log("Add Merrill");
+			addDataToGraph(myChart, {dates: date_range, data:merrill});
+			// console.log(merrill);
+			// console.log(moodys);
 		}).fail(function(){
-			console.log(arguments)
+			// console.log(arguments)
 		});
 	});
 	$("#form-zone").on("submit", "form", function(event){
@@ -134,6 +142,7 @@ $(document).ready(function(){
 		if (this.id==="Moodys_Form") return false;
 		var $this = $(this);
 		console.log($this.serialize());
+		console.log($this.attr("method"));
 		$.ajax({
 			method:$this.attr("method"),
 			url:$this.attr("action"),
